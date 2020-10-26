@@ -66,10 +66,8 @@
 			children = (
 				796C8D8D2546D7C0009A1E46 /* AppDelegate.swift */,
 				796C8D8F2546D7C0009A1E46 /* SceneDelegate.swift */,
-				796C8DA52546D925009A1E46 /* TabBarController.swift */,
-				796C8DA82546D99D009A1E46 /* HomeViewController.swift */,
-				796C8DAB2546D9AA009A1E46 /* ForecastViewController.swift */,
-				796C8DAE2546D9B2009A1E46 /* MapViewController.swift */,
+				796C8DBA2546DC4B009A1E46 /* navigation */,
+				796C8DB22546DC06009A1E46 /* views */,
 				796C8D932546D7C0009A1E46 /* Main.storyboard */,
 				796C8D992546D7C2009A1E46 /* Assets.xcassets */,
 				796C8D9B2546D7C2009A1E46 /* LaunchScreen.storyboard */,
@@ -77,6 +75,48 @@
 				796C8D962546D7C0009A1E46 /* wheather_feather.xcdatamodeld */,
 			);
 			path = "wheather-feather";
+			sourceTree = "<group>";
+		};
+		796C8DB22546DC06009A1E46 /* views */ = {
+			isa = PBXGroup;
+			children = (
+				796C8DB42546DC14009A1E46 /* home */,
+				796C8DB62546DC2D009A1E46 /* forecast */,
+				796C8DB82546DC39009A1E46 /* map */,
+			);
+			path = views;
+			sourceTree = "<group>";
+		};
+		796C8DB42546DC14009A1E46 /* home */ = {
+			isa = PBXGroup;
+			children = (
+				796C8DA82546D99D009A1E46 /* HomeViewController.swift */,
+			);
+			path = home;
+			sourceTree = "<group>";
+		};
+		796C8DB62546DC2D009A1E46 /* forecast */ = {
+			isa = PBXGroup;
+			children = (
+				796C8DAB2546D9AA009A1E46 /* ForecastViewController.swift */,
+			);
+			path = forecast;
+			sourceTree = "<group>";
+		};
+		796C8DB82546DC39009A1E46 /* map */ = {
+			isa = PBXGroup;
+			children = (
+				796C8DAE2546D9B2009A1E46 /* MapViewController.swift */,
+			);
+			path = map;
+			sourceTree = "<group>";
+		};
+		796C8DBA2546DC4B009A1E46 /* navigation */ = {
+			isa = PBXGroup;
+			children = (
+				796C8DA52546D925009A1E46 /* TabBarController.swift */,
+			);
+			path = navigation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
