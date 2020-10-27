@@ -53,6 +53,9 @@ extension AppDelegate: CLLocationManagerDelegate {
             print("Could not get current location..")
             return
         }
+        
+        Locations.shared.myLocation = locactionCoordinates
+        
         getDataForCurrentPosition(coords: locactionCoordinates)
         
         //getWeatherDataFromCache(fileName: .currentLocation)

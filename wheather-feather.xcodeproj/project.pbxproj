@@ -23,6 +23,7 @@
 		796C8DD525472B14009A1E46 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DD425472B14009A1E46 /* ForecastTableViewCell.swift */; };
 		796C8DDC25481426009A1E46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDB25481426009A1E46 /* Storage.swift */; };
 		796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDE25483223009A1E46 /* cacheHelpers.swift */; };
+		796C8DE525488B59009A1E46 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DE425488B59009A1E46 /* Locations.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -43,6 +44,7 @@
 		796C8DD425472B14009A1E46 /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
 		796C8DDB25481426009A1E46 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		796C8DDE25483223009A1E46 /* cacheHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cacheHelpers.swift; sourceTree = "<group>"; };
+		796C8DE425488B59009A1E46 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -156,6 +158,7 @@
 		796C8DCE254724EF009A1E46 /* models */ = {
 			isa = PBXGroup;
 			children = (
+				796C8DE425488B59009A1E46 /* Locations.swift */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -240,6 +243,7 @@
 				796C8DAC2546D9AA009A1E46 /* ForecastViewController.swift in Sources */,
 				796C8D8E2546D7C0009A1E46 /* AppDelegate.swift in Sources */,
 				796C8D902546D7C0009A1E46 /* SceneDelegate.swift in Sources */,
+				796C8DE525488B59009A1E46 /* Locations.swift in Sources */,
 				796C8DDC25481426009A1E46 /* Storage.swift in Sources */,
 				796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */,
 				796C8DA62546D925009A1E46 /* TabBarController.swift in Sources */,
@@ -397,6 +401,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JMPBW2LV67;
 				INFOPLIST_FILE = "wheather-feather/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -416,6 +421,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = JMPBW2LV67;
 				INFOPLIST_FILE = "wheather-feather/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
