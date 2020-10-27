@@ -11,9 +11,11 @@ import MapKit
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
+    var myLocation = Locations.shared.myLocation!
+    
     let mapView = MKMapView()
     let tapAnnotation = MKPointAnnotation()
-    var myLocation = Locations.shared.myLocation!
+    let myPointAnnotation = MKPointAnnotation()
     
     let switchMapMode = UISwitch()
     
@@ -51,12 +53,17 @@ extension MapViewController {
     func setupMap() {
         view.addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        mapView.mapType = .standard
         NSLayoutConstraint.activate([
             mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
             mapView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
         ])
         
+        centerMapToMyLocation()
+    }
+    
+    func centerMapToMyLocation() {
         let span = MKCoordinateSpan.init(latitudeDelta: 1.50, longitudeDelta: 1.50)
         let region = MKCoordinateRegion(center: myLocation, span: span)
         mapView.setRegion(region, animated: true)
@@ -67,11 +74,10 @@ extension MapViewController {
 extension MapViewController {
     
     func setMyPointAnnotation() {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = myLocation
-        annotation.title = UIDevice.current.name
-        annotation.subtitle = "Current location"
-        mapView.addAnnotation(annotation)
+        myPointAnnotation.coordinate = myLocation
+        myPointAnnotation.title = UIDevice.current.name
+        myPointAnnotation.subtitle = "Current location"
+        mapView.addAnnotation(myPointAnnotation)
     }
     
 }
@@ -121,8 +127,11 @@ extension MapViewController {
         
         if (sender.isOn) {
             print("Switch is on!")
+            mapView.removeAnnotation(myPointAnnotation)
         } else {
             print("Switch is off!")
+            centerMapToMyLocation()
+            mapView.addAnnotation(myPointAnnotation)
             mapView.removeAnnotation(tapAnnotation)
         }
         
