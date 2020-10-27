@@ -3,16 +3,16 @@
 //  wheather-feather
 //
 //  Created by Hans Maast on 26/10/2020.
-//
+//  Inspired by this article:
+//  https://medium.com/cleansoftware/quickly-implement-tableview-collectionview-programmatically-df12da694af9
+
 
 import UIKit
 import CoreLocation
 
 class ForecastViewController: UIViewController {
     
-   
-    
-    var titles: [String] = ["One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight"]
+    var titles: [Timeserie] = []
     
     let cellReuseId = "ForecastTableViewCell"
     
@@ -30,6 +30,10 @@ class ForecastViewController: UIViewController {
         super.viewDidLoad()
         
         setupTableView()
+        
+        titles = (getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries)!
+        
+        print("Timeseries: \(titles.count)")
         
         print("Forecast did load!")
     }
@@ -79,7 +83,7 @@ extension ForecastViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId) as! ForecastTableViewCell
-        cell.titleLabel.text = titles[indexPath.row]
+        cell.titleLabel.text = titles[indexPath.row].data.next_6_hours?.summary?.symbol_code
         return cell
     }
 }

@@ -3,7 +3,8 @@
 //  wheather-feather
 //
 //  Created by Hans Maast on 26/10/2020.
-//  Inspired by this article: https://medium.com/cleansoftware/quickly-implement-tableview-collectionview-programmatically-df12da694af9
+//  Inspired by this article:
+//  https://medium.com/cleansoftware/quickly-implement-tableview-collectionview-programmatically-df12da694af9
 
 import UIKit
 
