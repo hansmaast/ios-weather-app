@@ -10,11 +10,16 @@ import CoreData
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
-
+    
+    let locationManager = CLLocationManager()
+    var currentLocationCoordinate: CLLocationCoordinate2D? = nil
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
+        
+        print("Getting data..")
+        fetchAndSaveToCache(from: urlKristiania, cacheFileName: .specificLocation)
+        
+        
         return true
     }
 

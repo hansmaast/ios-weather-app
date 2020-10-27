@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct Response: Codable {
+struct MetApiResponse: Codable {
     let type: String
-   let geometry: Geometry
-   let properties: Properties
+    let geometry: Geometry
+    let properties: Properties
 }
 
 struct Geometry: Codable {
@@ -20,7 +20,7 @@ struct Geometry: Codable {
 
 struct Properties: Codable {
     let meta: Meta
-   let timeseries: [Timeserie]
+    let timeseries: [Timeserie]
 }
 
 struct Meta: Codable {
