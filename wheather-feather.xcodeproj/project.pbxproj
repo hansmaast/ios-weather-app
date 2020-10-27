@@ -24,6 +24,7 @@
 		796C8DDC25481426009A1E46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDB25481426009A1E46 /* Storage.swift */; };
 		796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDE25483223009A1E46 /* cacheHelpers.swift */; };
 		796C8DE525488B59009A1E46 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DE425488B59009A1E46 /* Locations.swift */; };
+		796C8DE82548A269009A1E46 /* MapForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DE72548A269009A1E46 /* MapForecastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		796C8DDB25481426009A1E46 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		796C8DDE25483223009A1E46 /* cacheHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cacheHelpers.swift; sourceTree = "<group>"; };
 		796C8DE425488B59009A1E46 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
+		796C8DE72548A269009A1E46 /* MapForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapForecastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +127,7 @@
 			isa = PBXGroup;
 			children = (
 				796C8DAE2546D9B2009A1E46 /* MapViewController.swift */,
+				796C8DE72548A269009A1E46 /* MapForecastView.swift */,
 			);
 			path = map;
 			sourceTree = "<group>";
@@ -243,6 +246,7 @@
 				796C8DAC2546D9AA009A1E46 /* ForecastViewController.swift in Sources */,
 				796C8D8E2546D7C0009A1E46 /* AppDelegate.swift in Sources */,
 				796C8D902546D7C0009A1E46 /* SceneDelegate.swift in Sources */,
+				796C8DE82548A269009A1E46 /* MapForecastView.swift in Sources */,
 				796C8DE525488B59009A1E46 /* Locations.swift in Sources */,
 				796C8DDC25481426009A1E46 /* Storage.swift in Sources */,
 				796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */,

@@ -28,6 +28,8 @@ class TabBarController: UITabBarController {
         
         let controllers = [homeViewController, forecastViewController, mapViewController]
         
+        controllers.map { $0.view.backgroundColor = .white }
+        
         // Maps a navigation controller to each of the "main" controllers
         self.viewControllers = controllers.map {
             UINavigationController(rootViewController: $0)

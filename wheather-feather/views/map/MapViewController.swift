@@ -14,15 +14,21 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     var myLocation = Locations.shared.myLocation!
     
     let mapView = MKMapView()
+    let mapForecastView = MapForecastView()
+    
     let tapAnnotation = MKPointAnnotation()
     let myPointAnnotation = MKPointAnnotation()
     
     let switchMapMode = UISwitch()
     
+    var delegate: MapForecastViewDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupMap()
+        
+        setupForecastView()
         
         setMyPointAnnotation()
         
@@ -57,7 +63,8 @@ extension MapViewController {
         NSLayoutConstraint.activate([
             mapView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             mapView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            mapView.widthAnchor.constraint(equalTo: view.safeAreaLayoutGuide.widthAnchor),
+            mapView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            mapView.rightAnchor.constraint(equalTo: view.rightAnchor),
         ])
         
         centerMapToMyLocation()
@@ -97,6 +104,12 @@ extension MapViewController {
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
         
+        if let delegate = self.delegate {
+            delegate.updateLabels(coor: coordinate)
+        } else {
+            print("Delegate not found..")
+        }
+        
         Locations.shared.pinLocation = coordinate
         
         print("Touched: \(coordinate.latitude) / \(coordinate.longitude)")
@@ -117,8 +130,8 @@ extension MapViewController {
         switchMapMode.layer.borderWidth = 1.5
         switchMapMode.layer.cornerRadius = switchMapMode.frame.height / 2
         NSLayoutConstraint.activate([
-            switchMapMode.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 25),
-            switchMapMode.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -25)
+            switchMapMode.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
+            switchMapMode.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24)
         ])
         switchMapMode.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
@@ -134,6 +147,20 @@ extension MapViewController {
             mapView.addAnnotation(myPointAnnotation)
             mapView.removeAnnotation(tapAnnotation)
         }
+        
+    }
+    
+}
+
+extension MapViewController {
+    
+    func setupForecastView() {
+        
+        view.addSubview(mapForecastView)
+        NSLayoutConstraint.activate([
+            mapForecastView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            mapForecastView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
         
     }
     
