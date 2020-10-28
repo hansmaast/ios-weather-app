@@ -67,7 +67,7 @@ extension MapForecastView {
         addSubview(stack)
         NSLayoutConstraint.activate([
             stack.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            stack.heightAnchor.constraint(equalTo: self.heightAnchor, multiplier: 0.5),
+            stack.heightAnchor.constraint(equalTo: self.heightAnchor, constant: Dimensions.shared.larger32 * -1),
             stack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: Dimensions.shared.medium16),
         ])
     }
@@ -107,12 +107,6 @@ extension MapForecastView {
 
     func setupImageView(imageType: String = "rain") {
         
-        if let weatherData = getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries[0].data {
-            print(weatherData.next_6_hours?.summary?.symbol_code)
-        }
-        
-        
-        imageView.backgroundColor = .black
         addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -121,9 +115,13 @@ extension MapForecastView {
             imageView.widthAnchor.constraint(equalTo: heightAnchor, constant: Dimensions.shared.medium16 * -1),
             imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: Dimensions.shared.larger32 * -1),
         ])
-        imageView.layer.cornerRadius = Dimensions.shared.medium16
-        imageView.layer.borderWidth = 1.5
-        imageView.layer.borderColor = UIColor.black.cgColor
+        
+        if let weatherData = getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries[0].data,
+           let iconName = weatherData.next_6_hours?.summary?.symbol_code {
+            print("Icon name: \(iconName)")
+            imageView.image = UIImage(named: iconName)
+        }
+        
     }
     
 }

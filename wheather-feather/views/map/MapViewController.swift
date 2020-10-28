@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class MapViewController: UIViewController, UIGestureRecognizerDelegate {
+class MapViewController: UIViewController {
     
     var myLocation = Locations.shared.myLocation
     
@@ -20,8 +20,6 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     let myPointAnnotation = MKPointAnnotation()
     
     let switchMapMode = UISwitch()
-    
-    var delegate: MapForecastViewDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,23 +43,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
 }
 
-extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
-    
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        let myLocation = manager.location!.coordinate
-        
-        print("update location! \(myLocation)")
-    }
-}
-
-extension MapViewController: MapForecastViewDelegate {
-    
-    func getPointCoordinates(coords: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
-        return coords
-    }
-    
-}
-
+// MARK: Map view
 extension MapViewController {
     
     func setupMap() {
@@ -86,6 +68,7 @@ extension MapViewController {
     
 }
 
+// MARK: Point annotation
 extension MapViewController {
     
     func setMyPointAnnotation() {
@@ -97,7 +80,8 @@ extension MapViewController {
     
 }
 
-extension MapViewController {
+// MARK: Gesture recognizer
+extension MapViewController: UIGestureRecognizerDelegate {
     
     func addGestureRecognizer() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -111,6 +95,7 @@ extension MapViewController {
         
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
+        
         
         getDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation)
         Locations.shared.pinLocation = coordinate
@@ -126,6 +111,7 @@ extension MapViewController {
     
 }
 
+// MARK: UISwitch
 extension MapViewController {
     
     func setupUISwitch() {
@@ -161,6 +147,7 @@ extension MapViewController {
     
 }
 
+// MARK: Forecast view
 extension MapViewController {
     
     func setupForecastView() {
@@ -171,6 +158,17 @@ extension MapViewController {
             mapForecastView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
+    }
+    
+}
+
+// MARK: Location manager
+extension MapViewController: CLLocationManagerDelegate {
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let myLocation = manager.location!.coordinate
+        
+        print("update location! \(myLocation)")
     }
     
 }

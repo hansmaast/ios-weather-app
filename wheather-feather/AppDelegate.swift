@@ -14,8 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let locationManager = CLLocationManager()
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-            
-        checkIfModifiedSince()
         
         return true
     }
@@ -47,8 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: CLLocationManagerDelegate {
     
-    func locationManager(_ manager: CLLocationManager,
-                         didUpdateLocations locations: [CLLocation]) {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let currentLocationCoordinates = manager.location?.coordinate else {
             print("Could not get current location..")
             return
@@ -57,8 +54,6 @@ extension AppDelegate: CLLocationManagerDelegate {
         Locations.shared.myLocation = currentLocationCoordinates
         
         getDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation)
-        
-        //getWeatherDataFromCache(fileName: .currentLocation)
     }
     
     func setupLocationManager() {
