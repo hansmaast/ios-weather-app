@@ -11,6 +11,8 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    var delegate: WeatherDataDelegate?
+    
     var myLocation = Locations.shared.myLocation
     
     let mapView = MKMapView()
@@ -91,11 +93,12 @@ extension MapViewController: UIGestureRecognizerDelegate {
     
     @objc func handleTap(gestureRecognizer: UILongPressGestureRecognizer) {
         
+        // TODO: Make it so the data updates on click. It is on click behind currently.
+        
         guard switchMapMode.isOn else { return }
         
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-        
         
         getDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation)
         Locations.shared.pinLocation = coordinate

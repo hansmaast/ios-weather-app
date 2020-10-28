@@ -21,6 +21,8 @@ class ForecastTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         setupUI()
     }
+       
+    let cellView = UIView()
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -35,10 +37,10 @@ class ForecastTableViewCell: UITableViewCell {
 extension ForecastTableViewCell {
     private func setupUI() {
         self.contentView.addSubview(titleLabel)
-        
         NSLayoutConstraint.activate([
             titleLabel.centerXAnchor.constraint(equalTo: self.contentView.centerXAnchor),
-            titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+            titleLabel.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            
         ])
         
     }

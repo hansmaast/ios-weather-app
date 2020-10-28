@@ -40,10 +40,10 @@ struct Units:Codable {
 
 struct Timeserie:Codable {
     let time: String
-    let data: WeatherData
+    let data: MetData
 }
 
-struct WeatherData: Codable {
+struct MetData: Codable {
     let instant: InstantData?
     let next_12_hours: TwelveHoursData?
     let next_1_hours: OneHoursData?
