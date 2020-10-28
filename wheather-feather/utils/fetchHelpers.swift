@@ -11,7 +11,6 @@ import CoreLocation
 
 let baseUrl = "https://api.met.no/weatherapi/locationforecast/2.0/compact"
 
-// TODO: round coords to be 4 dicimals
 let urlKristiania = "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=59.9112&lon=10.7448"
 
 func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName) {
@@ -54,19 +53,19 @@ func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName) {
     task.resume()
 }
 
-func getDataForCurrentPosition(coords: CLLocationCoordinate2D?) {
+func getDataForLocation(coords: CLLocationCoordinate2D?, saveToCacheAs: WeatherDataFileName) {
     guard let coordinates = coords else {
         print("Coords is nil")
         return
     }
     
     // should not use more than 4 decimals according to the docs
-    let latString = String(format: "%.4f", coordinates.latitude)
-    let lonString = String(format: "%.4f", coordinates.longitude)
+    let latString = getCoordString(coor: coordinates.latitude)
+    let lonString = getCoordString(coor: coordinates.longitude)
     
     let url = "\(baseUrl)?lat=\(latString)&lon=\(lonString)"
     
-    fetchAndSaveToCache(from: url, cacheFileName: .currentLocation)
+    fetchAndSaveToCache(from: url, cacheFileName: saveToCacheAs)
     
     print("Fetching for location \(latString) / \(lonString)")
 }
@@ -98,6 +97,9 @@ func checkIfModifiedSince() {
     */
 }
 
+func getCoordString(coor: CLLocationDegrees) -> String {
+    return String(format: "%.4f", coor)
+}
 
 func printDataSize(_ data: Data) {
     let bcf = ByteCountFormatter()

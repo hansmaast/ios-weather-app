@@ -49,14 +49,14 @@ extension AppDelegate: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager,
                          didUpdateLocations locations: [CLLocation]) {
-        guard let locactionCoordinates = manager.location?.coordinate else {
+        guard let currentLocationCoordinates = manager.location?.coordinate else {
             print("Could not get current location..")
             return
         }
         
-        Locations.shared.myLocation = locactionCoordinates
+        Locations.shared.myLocation = currentLocationCoordinates
         
-        getDataForCurrentPosition(coords: locactionCoordinates)
+        getDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation)
         
         //getWeatherDataFromCache(fileName: .currentLocation)
     }

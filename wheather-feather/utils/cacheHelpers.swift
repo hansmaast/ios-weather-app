@@ -20,10 +20,15 @@ func saveToCache(data: Data, fileName: WeatherDataFileName) {
     
     let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
     
-    FileManager
+    if FileManager
         .default
-        .createFile(atPath: url.path, contents: data, attributes: nil)
-
+        .createFile(atPath: url.path, contents: data, attributes: nil) {
+        print("Sucsess!💾")
+    }
+    else {
+        print("Could not save to disk..")
+    }
+    
 }
 
 func getCacheUrl() -> URL? {

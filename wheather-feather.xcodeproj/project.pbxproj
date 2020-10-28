@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		795A6DC925498215000BF15A /* dimensons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A6DC825498215000BF15A /* dimensons.swift */; };
 		796C8D8E2546D7C0009A1E46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8D8D2546D7C0009A1E46 /* AppDelegate.swift */; };
 		796C8D902546D7C0009A1E46 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8D8F2546D7C0009A1E46 /* SceneDelegate.swift */; };
 		796C8D952546D7C0009A1E46 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 796C8D932546D7C0009A1E46 /* Main.storyboard */; };
@@ -21,13 +22,13 @@
 		796C8DC32546E9B5009A1E46 /* responseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DC22546E9B5009A1E46 /* responseModel.swift */; };
 		796C8DC72547015A009A1E46 /* fetchHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DC62547015A009A1E46 /* fetchHelpers.swift */; };
 		796C8DD525472B14009A1E46 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DD425472B14009A1E46 /* ForecastTableViewCell.swift */; };
-		796C8DDC25481426009A1E46 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDB25481426009A1E46 /* Storage.swift */; };
 		796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DDE25483223009A1E46 /* cacheHelpers.swift */; };
 		796C8DE525488B59009A1E46 /* Locations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DE425488B59009A1E46 /* Locations.swift */; };
 		796C8DE82548A269009A1E46 /* MapForecastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DE72548A269009A1E46 /* MapForecastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		795A6DC825498215000BF15A /* dimensons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dimensons.swift; sourceTree = "<group>"; };
 		796C8D8A2546D7C0009A1E46 /* wheather-feather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wheather-feather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		796C8D8D2546D7C0009A1E46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796C8D8F2546D7C0009A1E46 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -43,7 +44,6 @@
 		796C8DC22546E9B5009A1E46 /* responseModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = responseModel.swift; sourceTree = "<group>"; };
 		796C8DC62547015A009A1E46 /* fetchHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fetchHelpers.swift; sourceTree = "<group>"; };
 		796C8DD425472B14009A1E46 /* ForecastTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastTableViewCell.swift; sourceTree = "<group>"; };
-		796C8DDB25481426009A1E46 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		796C8DDE25483223009A1E46 /* cacheHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = cacheHelpers.swift; sourceTree = "<group>"; };
 		796C8DE425488B59009A1E46 /* Locations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Locations.swift; sourceTree = "<group>"; };
 		796C8DE72548A269009A1E46 /* MapForecastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapForecastView.swift; sourceTree = "<group>"; };
@@ -153,7 +153,7 @@
 			children = (
 				796C8DC62547015A009A1E46 /* fetchHelpers.swift */,
 				796C8DDE25483223009A1E46 /* cacheHelpers.swift */,
-				796C8DDB25481426009A1E46 /* Storage.swift */,
+				795A6DC825498215000BF15A /* dimensons.swift */,
 			);
 			path = utils;
 			sourceTree = "<group>";
@@ -246,9 +246,9 @@
 				796C8DAC2546D9AA009A1E46 /* ForecastViewController.swift in Sources */,
 				796C8D8E2546D7C0009A1E46 /* AppDelegate.swift in Sources */,
 				796C8D902546D7C0009A1E46 /* SceneDelegate.swift in Sources */,
+				795A6DC925498215000BF15A /* dimensons.swift in Sources */,
 				796C8DE82548A269009A1E46 /* MapForecastView.swift in Sources */,
 				796C8DE525488B59009A1E46 /* Locations.swift in Sources */,
-				796C8DDC25481426009A1E46 /* Storage.swift in Sources */,
 				796C8DDF25483223009A1E46 /* cacheHelpers.swift in Sources */,
 				796C8DA62546D925009A1E46 /* TabBarController.swift in Sources */,
 				796C8D982546D7C0009A1E46 /* wheather_feather.xcdatamodeld in Sources */,

@@ -31,7 +31,9 @@ class ForecastViewController: UIViewController {
         
         setupTableView()
         
-        titles = (getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries)!
+        if  let data = (getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries) {
+            titles = data
+        }
         
         print("Timeseries: \(titles.count)")
         

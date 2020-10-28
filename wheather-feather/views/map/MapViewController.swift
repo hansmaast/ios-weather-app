@@ -11,7 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     
-    var myLocation = Locations.shared.myLocation!
+    var myLocation = Locations.shared.myLocation
     
     let mapView = MKMapView()
     let mapForecastView = MapForecastView()
@@ -40,7 +40,7 @@ class MapViewController: UIViewController, UIGestureRecognizerDelegate {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        myLocation = Locations.shared.myLocation!
+        myLocation = Locations.shared.myLocation
     }
     
 }
@@ -52,6 +52,14 @@ extension MapViewController: MKMapViewDelegate, CLLocationManagerDelegate {
         
         print("update location! \(myLocation)")
     }
+}
+
+extension MapViewController: MapForecastViewDelegate {
+    
+    func getPointCoordinates(coords: CLLocationCoordinate2D) -> CLLocationCoordinate2D {
+        return coords
+    }
+    
 }
 
 extension MapViewController {
@@ -72,7 +80,7 @@ extension MapViewController {
     
     func centerMapToMyLocation() {
         let span = MKCoordinateSpan.init(latitudeDelta: 1.50, longitudeDelta: 1.50)
-        let region = MKCoordinateRegion(center: myLocation, span: span)
+        let region = MKCoordinateRegion(center: myLocation!, span: span)
         mapView.setRegion(region, animated: true)
     }
     
@@ -81,7 +89,7 @@ extension MapViewController {
 extension MapViewController {
     
     func setMyPointAnnotation() {
-        myPointAnnotation.coordinate = myLocation
+        myPointAnnotation.coordinate = myLocation!
         myPointAnnotation.title = UIDevice.current.name
         myPointAnnotation.subtitle = "Current location"
         mapView.addAnnotation(myPointAnnotation)
@@ -104,18 +112,16 @@ extension MapViewController {
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
         
-        if let delegate = self.delegate {
-            delegate.updateLabels(coor: coordinate)
-        } else {
-            print("Delegate not found..")
-        }
-        
+        getDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation)
         Locations.shared.pinLocation = coordinate
         
         print("Touched: \(coordinate.latitude) / \(coordinate.longitude)")
         
         tapAnnotation.coordinate = coordinate
         mapView.addAnnotation(tapAnnotation)
+        
+        // Updade forecast view
+        mapForecastView.setNeedsLayout()
     }
     
 }
@@ -130,8 +136,8 @@ extension MapViewController {
         switchMapMode.layer.borderWidth = 1.5
         switchMapMode.layer.cornerRadius = switchMapMode.frame.height / 2
         NSLayoutConstraint.activate([
-            switchMapMode.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 24),
-            switchMapMode.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -24)
+            switchMapMode.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: Dimensions.shared.large24),
+            switchMapMode.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: Dimensions.shared.large24 * -1)
         ])
         switchMapMode.addTarget(self, action: #selector(switchValueChanged(_:)), for: .valueChanged)
     }
@@ -141,11 +147,14 @@ extension MapViewController {
         if (sender.isOn) {
             print("Switch is on!")
             mapView.removeAnnotation(myPointAnnotation)
-        } else {
+        }
+        else {
             print("Switch is off!")
             centerMapToMyLocation()
             mapView.addAnnotation(myPointAnnotation)
             mapView.removeAnnotation(tapAnnotation)
+            Locations.shared.pinLocation = nil
+            mapForecastView.setNeedsLayout()
         }
         
     }
@@ -158,7 +167,7 @@ extension MapViewController {
         
         view.addSubview(mapForecastView)
         NSLayoutConstraint.activate([
-            mapForecastView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8),
+            mapForecastView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Dimensions.shared.small8 * -1),
             mapForecastView.centerXAnchor.constraint(equalTo: view.centerXAnchor)
         ])
         
