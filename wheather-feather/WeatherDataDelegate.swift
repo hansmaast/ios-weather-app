@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum Container {
+enum TimeSerieProps {
     case Instant(InstantData)
     case OneHour(OneHoursData)
     case SixHours(SixHoursData)
@@ -16,7 +16,7 @@ enum Container {
 
 protocol WeatherDataDelegate {
     
-    func getPropertiesOfFirstTimeSerieData(for location: WeatherDataFileName) -> [Container]
+    func getPropertiesOfFirstTimeSerieData(for location: WeatherDataFileName) -> [TimeSerieProps]
     
     func getUpdatedAt(for location: WeatherDataFileName) -> String
     
@@ -28,11 +28,13 @@ protocol WeatherDataDelegate {
     
 }
 
+// TODO: It is currently fetching all data in cache for each function call.
+// Maybe it should fetch the data to a static variable, and then get the data from that variable?
 extension RootController: WeatherDataDelegate {
-    func getPropertiesOfFirstTimeSerieData(for location: WeatherDataFileName) -> [Container] {
+    func getPropertiesOfFirstTimeSerieData(for location: WeatherDataFileName) -> [TimeSerieProps] {
         let firstTimeserie = getWeatherDataFromCache(fileName: location)!.properties.timeseries[0].data
         
-        let props: [Container] = [
+        let props: [TimeSerieProps] = [
             .Instant(firstTimeserie.instant!),
             .OneHour(firstTimeserie.next_1_hours!),
             .SixHours(firstTimeserie.next_6_hours!),

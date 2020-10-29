@@ -30,7 +30,7 @@ class RootController: UITabBarController {
         mapViewController.tabBarItem = UITabBarItem(title: "Map", image: nil, selectedImage: nil)
         
         // TODO: Switch these back
-        let controllers = [homeViewController, forecastViewController, mapViewController]
+        let controllers = [forecastViewController, homeViewController, mapViewController]
         
         controllers.map { $0.view.backgroundColor = .white }
         

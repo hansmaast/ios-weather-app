@@ -12,25 +12,27 @@ import CoreLocation
 
 class ForecastViewController: UIViewController {
     
-    var data: [Container] = []
+    var properties: [TimeSerieProps] =  []
     
     let cellReuseId = "ForecastTableViewCell"
     
     var delegate: WeatherDataDelegate?
     
     lazy var tableView: UITableView = {
-        
         let tableView = UITableView()
-           tableView.delegate = self
-           tableView.dataSource = self
-           tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: cellReuseId)
-           tableView.tableFooterView = UIView()
-           tableView.translatesAutoresizingMaskIntoConstraints = false
-           return tableView
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: cellReuseId)
+        tableView.tableFooterView = UIView()
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = UITableView.automaticDimension
+        return tableView
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        properties = (delegate?.getPropertiesOfFirstTimeSerieData(for: .currentLocation))!
         
         setupTableView()
                 
@@ -71,25 +73,36 @@ extension ForecastViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseId) as! ForecastTableViewCell
         
-        let data = delegate?.getPropertiesOfFirstTimeSerieData(for: .currentLocation)[indexPath.row]
+        let data = properties[indexPath.row]
         
-        
-        switch data! {
+        switch data {
         case .Instant(let val):
             // cell.titleLabel.text = String(format: "%f", val.details!.air_temperature as! CVarArg)
-            cell.titleLabel.text = "Now"
+            cell.timeLabel.text = "Now"
+            if let temperature = val.details?.air_temperature {
+                cell.infoLabel.text = "Temperature: \(temperature)"
+            }
             return cell
         case .OneHour(let val):
             // cell.titleLabel.text = val.summary?.symbol_code
-            cell.titleLabel.text = "Next hour"
+            cell.timeLabel.text = "Next hour"
+            if let iconName = val.summary?.symbol_code {
+                cell.forecastCellImage.image = UIImage(named: iconName)
+            }
             return cell
         case .SixHours(let val):
             // cell.titleLabel.text = val.summary?.symbol_code
-            cell.titleLabel.text = "Next 6 hours"
+            cell.timeLabel.text = "Next 6 hours"
+            if let iconName = val.summary?.symbol_code {
+                cell.forecastCellImage.image = UIImage(named: iconName)
+            }
             return cell
         case .TwelveHours(let val):
             // cell.titleLabel.text = val.summary?.symbol_code
-            cell.titleLabel.text = "Next 12 hours"
+            cell.timeLabel.text = "Next 12 hours"
+            if let iconName = val.summary?.symbol_code {
+                cell.forecastCellImage.image = UIImage(named: iconName)
+            }
             return cell
         }
     }
