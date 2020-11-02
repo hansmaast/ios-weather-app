@@ -16,19 +16,22 @@ enum WeatherDataFileName: String {
     case specificLocation = "specific-location-weatherdata.json"
 }
 
-func saveToCache(data: Data, fileName: WeatherDataFileName) {
+func saveToCache(data: Data, fileName: WeatherDataFileName, completion: () -> ()) {
     
-    let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
-    
-    if FileManager
-        .default
-        .createFile(atPath: url.path, contents: data, attributes: nil) {
-        print("Sucsess!💾")
-    }
-    else {
-        print("Could not save to disk..")
-    }
-    
+        
+        let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
+        
+        if FileManager
+            .default
+            .createFile(atPath: url.path, contents: data, attributes: nil) {
+            print("Sucsess!💾")
+            completion()
+        }
+        else {
+            print("Could not save to disk..")
+        }
+        
+        
 }
 
 func getCacheUrl() -> URL? {
@@ -37,25 +40,27 @@ func getCacheUrl() -> URL? {
 }
 
 func getWeatherDataFromCache(fileName: WeatherDataFileName) -> MetApiResponse? {
-    let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
-    
-    if !FileManager.default.fileExists(atPath: url.path) {
-        print(CacheHelperError.error("No data at location: \(url.path)"))
-    }
-    
-    if let data = FileManager.default.contents(atPath: url.path) {
-        let decoder = JSONDecoder()
-        let model = MetApiResponse.self
-        do {
-            let model = try decoder.decode(model, from: data)
-            print("Returning data updated at \(model.properties.meta.updated_at)")
-            return model
-        } catch {
-            print(error)
+        
+        let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
+        
+        if !FileManager.default.fileExists(atPath: url.path) {
+            print(CacheHelperError.error("No data at location: \(url.path)"))
         }
-    }
-    else {
-        print(CacheHelperError.error("No data at location: \(url.path)"))
-    }
-    return nil
+        
+        if let data = FileManager.default.contents(atPath: url.path) {
+            let decoder = JSONDecoder()
+            let model = MetApiResponse.self
+            do {
+                let model = try decoder.decode(model, from: data)
+                print("Returning data updated at \(model.properties.meta.updated_at)")
+                return model
+            } catch {
+                print(error)
+            }
+        }
+        else {
+            print(CacheHelperError.error("No data at location: \(url.path)"))
+        }
+        return nil
 }
+

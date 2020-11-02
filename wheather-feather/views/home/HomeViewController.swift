@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class HomeViewController: UIViewController {
     
@@ -14,13 +15,36 @@ class HomeViewController: UIViewController {
     let textLabel = UILabel()
     let dateLabel = UILabel()
     let homeImageView = UIImageView()
-
-    var delegate: WeatherDataDelegate?
-
+    let resultViewController = UIViewController()
+    
+    var data: CurrentLocationWeather?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("from delegate: \(delegate!.getHomeText())")
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(locationUpdated),
+            name: WeatherDataNotifications.currentLocationUpdated,
+            object: nil)
+        
+        data = CurrentLocationWeather.shared
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeUp.direction = .up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
         
         setupTitleLabel()
         
@@ -31,16 +55,46 @@ class HomeViewController: UIViewController {
         setupDateLabel()
         
         print("Home did load!")
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.setNeedsLayout()
+        
+        data = CurrentLocationWeather.shared
+        
     }
+    
+    
 }
 
 
+
 extension HomeViewController {
-        
+    
+    @objc func locationUpdated() {
+        DispatchQueue.main.async {
+            self.view.setNeedsLayout()
+        }
+    }
+    
+    // https://stackoverflow.com/questions/39764088/swipe-gesture-in-swift-3
+    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
+        if gesture.direction == .right {
+            print("Swipe Right")
+        }
+        else if gesture.direction == .left {
+            print("Swipe Left")
+            self.present(resultViewController, animated:true, completion:nil)
+        }
+        else if gesture.direction == .up {
+            print("Swipe Up")
+            self.present(self, animated:true, completion:nil)
+        }
+        else if gesture.direction == .down {
+            print("Swipe Down")
+        }
+    }
+    
     func setupHomeImage() {
         
         view.addSubview(homeImageView)
@@ -52,8 +106,10 @@ extension HomeViewController {
             homeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
-        let iconName = delegate!.getTwelveHourSummary(for: .currentLocation)!
-        homeImageView.image = UIImage(named: iconName)
+        if let iconName = CurrentLocationWeather.shared.nextTwelveHours.summary?.symbol_code {
+            homeImageView.image = UIImage(named: iconName)
+        }
+        
     }
     
     func setupTitleLabel() {
@@ -72,7 +128,7 @@ extension HomeViewController {
         
         view.addSubview(textLabel)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.text = delegate!.getHomeText()
+        textLabel.text = data!.getHomeText()
         textLabel.font = titleLabel.font.withSize(Dimensions.shared.large20)
         NSLayoutConstraint.activate([
             textLabel.topAnchor.constraint(equalTo: homeImageView.bottomAnchor, constant: Dimensions.shared.large24 * 2),
@@ -84,7 +140,7 @@ extension HomeViewController {
     func setupDateLabel() {
         view.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.text = delegate?.getUpdatedAt(for: .currentLocation)
+        dateLabel.text = data!.getUpdatedAt()
         dateLabel.font = textLabel.font.withSize(Dimensions.shared.small12)
         NSLayoutConstraint.activate([
             dateLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Dimensions.shared.small8 * -1),

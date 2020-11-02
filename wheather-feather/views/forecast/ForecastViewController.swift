@@ -16,27 +16,33 @@ class ForecastViewController: UIViewController {
     
     let cellReuseId = "ForecastTableViewCell"
     
-    var delegate: WeatherDataDelegate?
+    let footer = UIView()
     
-    lazy var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: cellReuseId)
-        tableView.tableFooterView = UIView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.rowHeight = UITableView.automaticDimension
-        return tableView
-    }()
+    let footerLabel = UILabel()
+    
+    let tableView = UITableView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        properties = (delegate?.getPropertiesOfFirstTimeSerieData(for: .currentLocation))!
+        setupFooter()
+        
+        setupFooterLabel()
         
         setupTableView()
                 
         print("Forecast did load!")
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+
+        DispatchQueue.global().async { [self] in
+            properties = SpecificLocationWeather.shared.getPropertiesOfFirstTimeSerieData()!
+            
+            DispatchQueue.main.async {
+                tableView.reloadData()
+            }
+        }
     }
 }
 
@@ -48,22 +54,54 @@ extension ForecastViewController {
             overrideUserInterfaceStyle = .light
         }
         
-        self.view.backgroundColor = .white
+        view.addSubview(tableView)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.register(ForecastTableViewCell.self, forCellReuseIdentifier: cellReuseId)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.rowHeight = UITableView.automaticDimension
+        tableView.backgroundColor = .red
         
-        self.view.addSubview(tableView)
+    
         
         NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
             tableView.widthAnchor.constraint(equalTo: view.widthAnchor),
-            tableView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor),
+        ])
+    }
+    
+    func setupFooter() {
+        view.addSubview(footer)
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        footer.backgroundColor = .green
+        NSLayoutConstraint.activate([
+            footer.widthAnchor.constraint(equalTo: view.widthAnchor),
+            footer.heightAnchor.constraint(equalToConstant: 50),
+            footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
+        
+    }
+    
+    func setupFooterLabel() {
+        footer.addSubview(footerLabel)
+        footer.translatesAutoresizingMaskIntoConstraints = false
+        footerLabel.text = "Forecast for location \(123)"
+        NSLayoutConstraint.activate([
+            footerLabel.topAnchor.constraint(equalTo: footer.topAnchor),
+            footerLabel.leftAnchor.constraint(equalTo: footer.leftAnchor),
+            footerLabel.widthAnchor.constraint(equalTo: footer.widthAnchor),
+            footerLabel.heightAnchor.constraint(equalToConstant: 20)
+            
         ])
     }
     
 }
 
-extension ForecastViewController: UITableViewDelegate, UITableViewDataSource {
+extension ForecastViewController: UITableViewDelegate, UITableViewDataSource  {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return delegate!.getPropertiesOfFirstTimeSerieData(for: .currentLocation).count
+        return self.properties.count
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -77,34 +115,28 @@ extension ForecastViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch data {
         case .Instant(let val):
-            // cell.titleLabel.text = String(format: "%f", val.details!.air_temperature as! CVarArg)
             cell.timeLabel.text = "Now"
             if let temperature = val.details?.air_temperature {
                 cell.infoLabel.text = "Temperature: \(temperature)"
             }
-            return cell
         case .OneHour(let val):
-            // cell.titleLabel.text = val.summary?.symbol_code
             cell.timeLabel.text = "Next hour"
             if let iconName = val.summary?.symbol_code {
                 cell.forecastCellImage.image = UIImage(named: iconName)
             }
-            return cell
         case .SixHours(let val):
-            // cell.titleLabel.text = val.summary?.symbol_code
             cell.timeLabel.text = "Next 6 hours"
             if let iconName = val.summary?.symbol_code {
                 cell.forecastCellImage.image = UIImage(named: iconName)
             }
-            return cell
         case .TwelveHours(let val):
-            // cell.titleLabel.text = val.summary?.symbol_code
             cell.timeLabel.text = "Next 12 hours"
             if let iconName = val.summary?.symbol_code {
                 cell.forecastCellImage.image = UIImage(named: iconName)
             }
-            return cell
         }
+        
+        return cell
     }
     
 }

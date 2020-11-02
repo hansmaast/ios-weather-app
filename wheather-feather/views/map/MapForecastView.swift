@@ -21,16 +21,20 @@ class MapForecastView: UIView {
         
         print("Laying out..")
         
-        if let pinLocation = Locations.shared.pinLocation {
+        //DispatchQueue.main.async { [self] in
+            
+            if let pinLocation = Locations.shared.pinLocation {
                 setupLabels(coor: pinLocation)
-        }
-        else {
-            setupLabels()
-        }
-        
-        setupStackView()
-        
-        setupImageView()
+            }
+            else {
+                setupLabels()
+            }
+            
+            setupStackView()
+            
+            setupImageView()
+            
+        //}
         
     }
     
@@ -55,6 +59,7 @@ class MapForecastView: UIView {
 extension MapForecastView {
     
     func setupStackView() {
+        
         stack.axis = .vertical
         stack.distribution = .equalCentering
         stack.alignment = .center
@@ -71,13 +76,13 @@ extension MapForecastView {
             stack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: Dimensions.shared.medium16),
         ])
     }
-    
 }
 
 // MARK: Labels
 extension MapForecastView {
     
     func setupLabels(coor: CLLocationCoordinate2D = Locations.shared.myLocation!) {
+        
         let latString = getCoordString(coor: coor.latitude)
         let lonString = getCoordString(coor: coor.longitude)
         
@@ -88,7 +93,7 @@ extension MapForecastView {
         lonLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         
         if let weatherData = getWeatherDataFromCache(fileName: .specificLocation)?.properties
-            {
+        {
             if let temp = weatherData.timeseries[0].data.instant?.details?.air_temperature {
                 let unit = weatherData.meta.units.air_temperature
                 print("Temp: \(temp) \(unit)")
@@ -97,14 +102,12 @@ extension MapForecastView {
                 tempLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
             }
         }
-        
     }
-    
 }
 
 // MARK: Image view
 extension MapForecastView {
-
+    
     func setupImageView(imageType: String = "rain") {
         
         addSubview(imageView)
@@ -121,9 +124,7 @@ extension MapForecastView {
             print("Icon name: \(iconName)")
             imageView.image = UIImage(named: iconName)
         }
-        
     }
-    
 }
 
 protocol MapForecastViewDelegate {

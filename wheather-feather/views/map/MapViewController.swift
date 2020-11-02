@@ -11,8 +11,6 @@ import MapKit
 
 class MapViewController: UIViewController {
     
-    var delegate: WeatherDataDelegate?
-    
     var myLocation = Locations.shared.myLocation
     
     let mapView = MKMapView()
@@ -26,15 +24,21 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupMap()
-        
-        setupForecastView()
-        
-        setMyPointAnnotation()
-        
-        addGestureRecognizer()
-        
-        setupUISwitch()
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(locationUpdated),
+            name: WeatherDataNotifications.currentLocationUpdated,
+            object: nil)
+            
+            setupMap()
+            
+            setupForecastView()
+            
+            setMyPointAnnotation()
+            
+            addGestureRecognizer()
+            
+            setupUISwitch()
         
         print("Map did load!")
     }
@@ -68,12 +72,23 @@ extension MapViewController {
         mapView.setRegion(region, animated: true)
     }
     
+    @objc func locationUpdated() {
+        
+        myLocation = Locations.shared.myLocation
+        
+        DispatchQueue.main.async {
+            self.setMyPointAnnotation()
+            self.mapForecastView.setNeedsLayout()
+        }
+    }
+    
 }
 
 // MARK: Point annotation
 extension MapViewController {
     
     func setMyPointAnnotation() {
+        mapView.removeAnnotation(myPointAnnotation)
         myPointAnnotation.coordinate = myLocation!
         myPointAnnotation.title = UIDevice.current.name
         myPointAnnotation.subtitle = "Current location"
@@ -87,8 +102,8 @@ extension MapViewController: UIGestureRecognizerDelegate {
     
     func addGestureRecognizer() {
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
-            gestureRecognizer.delegate = self
-            mapView.addGestureRecognizer(gestureRecognizer)
+        gestureRecognizer.delegate = self
+        mapView.addGestureRecognizer(gestureRecognizer)
     }
     
     @objc func handleTap(gestureRecognizer: UILongPressGestureRecognizer) {
@@ -100,18 +115,26 @@ extension MapViewController: UIGestureRecognizerDelegate {
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
         
-        getDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation)
-        Locations.shared.pinLocation = coordinate
+        
+        print("User interactive triggered!")
         
         print("Touched: \(coordinate.latitude) / \(coordinate.longitude)")
-        
-        tapAnnotation.coordinate = coordinate
-        mapView.addAnnotation(tapAnnotation)
-        
-        // Updade forecast view
-        mapForecastView.setNeedsLayout()
+        Locations.shared.pinLocation = coordinate
+        self.tapAnnotation.coordinate = coordinate
+        self.mapView.addAnnotation(self.tapAnnotation)
+        fetchDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation, completion: {
+            print("👆Fetched data for pin location!")
+            
+            // Updates UI when fetching is finished...
+            
+            SpecificLocationWeather.shared.updateWeatherData()
+            
+            DispatchQueue.main.async {
+                // Updade forecast view
+                self.mapForecastView.setNeedsLayout()
+            }
+        })
     }
-    
 }
 
 // MARK: UISwitch

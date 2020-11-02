@@ -22,13 +22,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupLocationManager()
         
-        print("Fetching data!")
-        fetchAndSaveToCache(from: urlKristiania, cacheFileName: .specificLocation)
+        
+        
+        fetchDataForLocation(coords: Locations.shared.hkLocation, saveToCacheAs: .specificLocation, completion: {
+            print("🎓Fetched data for HK!")
+            SpecificLocationWeather.shared.updateWeatherData()
+        })
         
         return true
     }
 
-    // MARK: UISceneSession Lifecycle
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
@@ -37,9 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
-        // Called when the user discards a scene session.
-        // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
-        // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+        
     }
 }
 
@@ -53,7 +54,12 @@ extension AppDelegate: CLLocationManagerDelegate {
         
         Locations.shared.myLocation = currentLocationCoordinates
         
-        getDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation)
+        fetchDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {
+            print("📍Fetched data for current location!")
+            CurrentLocationWeather.shared.updateWeatherData()
+        })
+        
+        NotificationCenter.default.post(name: WeatherDataNotifications.currentLocationUpdated, object: nil)
     }
     
     func setupLocationManager() {
