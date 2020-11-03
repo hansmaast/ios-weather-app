@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Network
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -24,7 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         
         
-        fetchDataForLocation(coords: Locations.shared.hkLocation, saveToCacheAs: .specificLocation, completion: {
+        fetchDataForLocation(coords: Locations.shared.hkLocation, saveToCacheAs: .specificLocation, completion: { error in
+            
+            guard error == nil else {
+                print("💥💥💥💥")
+                print(error)
+                return
+            }
             print("🎓Fetched data for HK!")
             SpecificLocationWeather.shared.updateWeatherData()
         })
@@ -54,7 +61,14 @@ extension AppDelegate: CLLocationManagerDelegate {
         
         Locations.shared.myLocation = currentLocationCoordinates
         
-        fetchDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {
+        fetchDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {error in
+            
+            guard error == nil else {
+                print("💥💥💥💥")
+                print(error)
+                return
+            }
+            
             print("📍Fetched data for current location!")
             CurrentLocationWeather.shared.updateWeatherData()
         })

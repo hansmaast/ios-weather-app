@@ -10,6 +10,8 @@ import CoreLocation
 
 class MapForecastView: UIView {
     
+    // TODO: Make the temp go bakc agin when the switch is off..
+    
     let latLabel = UILabel()
     let lonLabel = UILabel()
     let tempLabel = UILabel()

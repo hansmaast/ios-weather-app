@@ -13,21 +13,16 @@ let baseUrl = "https://api.met.no/weatherapi/locationforecast/2.0/compact"
 
 let urlKristiania = "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat=59.9112&lon=10.7448"
 
-func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName, completion: @escaping () -> ()) {
+func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName, completion: @escaping FetchFromApiCompletion) {
     
     let task = URLSession.shared.dataTask(with: URL(string: url)!, completionHandler: {data, response, error in
         
         guard let data = data, error == nil else {
             print("Something went wrong while trying to fetch data..")
+            print(error?.localizedDescription)
+            
+            completion(error)
             return
-        }
-        
-        if let res = response as? HTTPURLResponse {
-            
-            //print("HTTPResponse -> \(res)")
-            
-            
-            
         }
         
         // If we get down her we have data
@@ -42,7 +37,13 @@ func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName, c
     task.resume()
 }
 
-func fetchDataForLocation(coords: CLLocationCoordinate2D?, saveToCacheAs: WeatherDataFileName, completion: @escaping () -> ()) {
+enum FetchError: Error {
+    case failed(msg: String, code: Int? = nil)
+}
+
+typealias FetchFromApiCompletion = (_ error: Error? ) -> ()
+
+func fetchDataForLocation(coords: CLLocationCoordinate2D?, saveToCacheAs: WeatherDataFileName, completion: @escaping FetchFromApiCompletion) {
     guard let coordinates = coords else {
         print("Coords is nil")
         return

@@ -30,21 +30,7 @@ class HomeViewController: UIViewController {
         
         data = CurrentLocationWeather.shared
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeUp.direction = .up
-        self.view.addGestureRecognizer(swipeUp)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
+        setupSwipeGestures()
         
         setupTitleLabel()
         
@@ -60,6 +46,8 @@ class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         
+        checkIfRain()
+        
         data = CurrentLocationWeather.shared
         
     }
@@ -70,6 +58,46 @@ class HomeViewController: UIViewController {
 
 
 extension HomeViewController {
+    
+    func displayRainDrops() {
+        
+        /**
+                    Droplets found here:
+         Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+         */
+        
+        let maxX = UIScreen.main.bounds.maxX
+        let minX = UIScreen.main.bounds.minX
+        let maxY = UIScreen.main.bounds.maxY
+        let minY = UIScreen.main.bounds.minY
+        
+        // Here we could f.ex say 1...percipitationAmout * 100,
+        // And the droplets would be raltive to the amount of rain :)
+        for n in 1...100 {
+        
+            let randomRectSize = CGFloat.random(in: 5...25)
+            
+            let duration = randomRectSize / 15
+            
+            let rainDrop = UIImageView(frame: CGRect(x: CGFloat.random(in: minX...maxX),
+                                                     y: 0,
+                                                     width: randomRectSize,
+                                                     height: randomRectSize))
+            rainDrop.image = UIImage(named: "rainDrop")
+            
+            UIView.animate(withDuration: TimeInterval(duration),
+                           delay: Double(n) * 0.01,
+                           options: [.repeat, .preferredFramesPerSecond60, .curveEaseIn],
+                           animations: {
+                
+                rainDrop.transform = CGAffineTransform(translationX: 0, y: maxY)
+                
+            })
+            
+            view.addSubview(rainDrop)
+        }
+    }
+    
     
     @objc func locationUpdated() {
         DispatchQueue.main.async {
@@ -87,11 +115,64 @@ extension HomeViewController {
         }
         else if gesture.direction == .up {
             print("Swipe Up")
-            self.present(self, animated:true, completion:nil)
         }
         else if gesture.direction == .down {
             print("Swipe Down")
         }
+    }
+    
+    func setupSwipeGestures(){
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeLeft.direction = .left
+        self.view.addGestureRecognizer(swipeLeft)
+        
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeRight.direction = .right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeUp.direction = .up
+        self.view.addGestureRecognizer(swipeUp)
+        
+        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
+        swipeDown.direction = .down
+        self.view.addGestureRecognizer(swipeDown)
+        
+    }
+    
+    func displaySunAnimation() {
+        
+        UIView.animate(withDuration: 2.0,
+                       delay: 0,
+                       options: [.repeat, .preferredFramesPerSecond60, .curveLinear],
+                       animations: {
+                        self.homeImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
+        })
+        
+        UIView.animate(withDuration: 2.0,
+                       delay: 0,
+                       options: [.preferredFramesPerSecond60, .curveEaseIn],
+                       animations: {
+                        self.view.backgroundColor = .yellow
+        })
+        
+    }
+    
+    func checkIfRain() {
+        
+        if let data = data {
+            
+            if data.isRainNextTwelveHours() {
+                homeImageView.image = UIImage(named: "umbrella")
+                displayRainDrops()
+            } else {
+                homeImageView.image = UIImage(named: "sun")
+                displaySunAnimation()
+            }
+            
+        }
+        
     }
     
     func setupHomeImage() {
@@ -105,8 +186,9 @@ extension HomeViewController {
             homeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
         
+        
         if let iconName = CurrentLocationWeather.shared.nextTwelveHours.summary?.symbol_code {
-            homeImageView.image = UIImage(named: iconName)
+            
         }
         
     }
@@ -123,6 +205,7 @@ extension HomeViewController {
         ])
     }
     
+    // TODO: Make sure it breaks the text!
     func setupTextLabel() {
         
         view.addSubview(textLabel)
