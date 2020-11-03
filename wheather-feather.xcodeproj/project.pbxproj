@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 50;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,7 +16,6 @@
 		796C8DA92546D99D009A1E46 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DA82546D99D009A1E46 /* HomeViewController.swift */; };
 		796C8DAC2546D9AA009A1E46 /* ForecastViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DAB2546D9AA009A1E46 /* ForecastViewController.swift */; };
 		796C8DAF2546D9B2009A1E46 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DAE2546D9B2009A1E46 /* MapViewController.swift */; };
-		796C8DBE2546E621009A1E46 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 796C8DBD2546E621009A1E46 /* Alamofire */; };
 		796C8DC32546E9B5009A1E46 /* responseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DC22546E9B5009A1E46 /* responseModel.swift */; };
 		796C8DC72547015A009A1E46 /* fetchHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DC62547015A009A1E46 /* fetchHelpers.swift */; };
 		796C8DD525472B14009A1E46 /* ForecastTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8DD425472B14009A1E46 /* ForecastTableViewCell.swift */; };
@@ -58,7 +57,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				796C8DBE2546E621009A1E46 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -181,7 +179,6 @@
 			);
 			name = "wheather-feather";
 			packageProductDependencies = (
-				796C8DBD2546E621009A1E46 /* Alamofire */,
 			);
 			productName = "wheather-feather";
 			productReference = 796C8D8A2546D7C0009A1E46 /* wheather-feather.app */;
@@ -211,7 +208,6 @@
 			);
 			mainGroup = 796C8D812546D7C0009A1E46;
 			packageReferences = (
-				796C8DBC2546E621009A1E46 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 796C8D8B2546D7C0009A1E46 /* Products */;
 			projectDirPath = "";
@@ -440,25 +436,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		796C8DBC2546E621009A1E46 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.3.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		796C8DBD2546E621009A1E46 /* Alamofire */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 796C8DBC2546E621009A1E46 /* XCRemoteSwiftPackageReference "Alamofire" */;
-			productName = Alamofire;
-		};
-/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		796C8D962546D7C0009A1E46 /* wheather_feather.xcdatamodeld */ = {

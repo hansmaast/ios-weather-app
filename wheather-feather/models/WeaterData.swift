@@ -24,6 +24,11 @@ protocol WeatherDataDelegate {
     
 }
 
+
+/**
+    Inspired by the code from this article:
+    https://www.raywenderlich.com/5371-grand-central-dispatch-tutorial-for-swift-4-part-2-2
+ */
 struct WeatherDataNotifications {
     
     static let currentLocationUpdated = Notification.Name("currentLocationUpdate")

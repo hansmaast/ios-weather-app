@@ -16,7 +16,7 @@ enum WeatherDataFileName: String {
     case specificLocation = "specific-location-weatherdata.json"
 }
 
-func saveToCache(data: Data, fileName: WeatherDataFileName, completion: () -> ()) {
+func saveToCache(data: Data, fileName: WeatherDataFileName, completion: FetchFromApiCompletion) {
     
         
         let url = getCacheUrl()!.appendingPathComponent(fileName.rawValue)
@@ -25,10 +25,11 @@ func saveToCache(data: Data, fileName: WeatherDataFileName, completion: () -> ()
             .default
             .createFile(atPath: url.path, contents: data, attributes: nil) {
             print("Sucsess!💾")
-            completion()
+            completion(nil)
         }
         else {
             print("Could not save to disk..")
+            completion(FetchError.failed(msg: "Could not save to disk.."))
         }
         
         

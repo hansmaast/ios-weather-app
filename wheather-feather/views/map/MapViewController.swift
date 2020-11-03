@@ -29,16 +29,16 @@ class MapViewController: UIViewController {
             selector: #selector(locationUpdated),
             name: WeatherDataNotifications.currentLocationUpdated,
             object: nil)
-            
-            setupMap()
-            
-            setupForecastView()
-            
-            setMyPointAnnotation()
-            
-            addGestureRecognizer()
-            
-            setupUISwitch()
+        
+        setupMap()
+        
+        setupForecastView()
+        
+        setMyPointAnnotation()
+        
+        addGestureRecognizer()
+        
+        setupUISwitch()
         
         print("Map did load!")
     }
@@ -122,18 +122,43 @@ extension MapViewController: UIGestureRecognizerDelegate {
         Locations.shared.pinLocation = coordinate
         self.tapAnnotation.coordinate = coordinate
         self.mapView.addAnnotation(self.tapAnnotation)
-        fetchDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation, completion: {
+        fetchDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation, completion: {error in
+            
+            if let error = error {
+                
+                displayAlert(error, to: self)
+                return
+                
+            }
+            
             print("👆Fetched data for pin location!")
             
             // Updates UI when fetching is finished...
             
-            SpecificLocationWeather.shared.updateWeatherData()
-            
-            DispatchQueue.main.async {
-                // Updade forecast view
-                self.mapForecastView.setNeedsLayout()
+            DispatchQueue.global(qos: .utility).async {
+                SpecificLocationWeather.shared.updateWeatherData()
+                
+                DispatchQueue.main.async {
+                    // Updade forecast view
+                    self.mapForecastView.setNeedsLayout()
+                }
             }
         })
+    }
+}
+
+func displayAlert(_ err: Error, to parent: UIViewController) {
+    
+    let msg = "\(err.localizedDescription)\n Check your connection and try again."
+    let alertController = UIAlertController(title: "🚧 Hold up! 🚧", message: msg, preferredStyle: .alert)
+    let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+    alertController.addAction(alertAction)
+    
+    print("💥💥💥💥")
+    print(err)
+    
+    DispatchQueue.main.async {
+        parent.present(alertController, animated: true, completion: nil)
     }
 }
 

@@ -84,7 +84,6 @@ extension HomeViewController {
         }
         else if gesture.direction == .left {
             print("Swipe Left")
-            self.present(resultViewController, animated:true, completion:nil)
         }
         else if gesture.direction == .up {
             print("Swipe Up")
