@@ -51,7 +51,7 @@ extension CurrentLocationWeather: WeatherDataDelegate {
     
     func getUpdatedAt() -> String {
         
-        let date = convertIsoTo(date: updatetAt)!
+        let date = convertIsoTo(date: updatedAt)!
         
         return getDateString(from: date)
         

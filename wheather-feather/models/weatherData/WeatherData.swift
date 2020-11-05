@@ -26,11 +26,12 @@ protocol WeatherDataDelegate {
 
 
 /**
-    Inspired by the code from this article:
-    https://www.raywenderlich.com/5371-grand-central-dispatch-tutorial-for-swift-4-part-2-2
+ Inspired by the code from this article:
+ https://www.raywenderlich.com/5371-grand-central-dispatch-tutorial-for-swift-4-part-2-2
  */
 struct WeatherDataNotifications {
     
+    static let fetchFailed = Notification.Name("currentLocationUpdate")
     static let currentLocationUpdated = Notification.Name("currentLocationUpdate")
     
 }
@@ -47,9 +48,11 @@ class WeatherData {
     
     init(for location: WeatherDataFileName) {
         
-        self.ApiResponse = getWeatherDataFromCache(fileName: location)!
+        print("🕋 🕋")
         
-        self.updatetAt = ApiResponse.properties.meta.updated_at
+        self.ApiResponse = try! getDataFromCache(fileName: location)!
+        
+        self.updatedAt = ApiResponse.properties.meta.updated_at
         
         self.coordinates = CLLocationCoordinate2D(
             latitude: ApiResponse.geometry.coordinates[1],
@@ -71,26 +74,27 @@ class WeatherData {
         self.nextTwelveHours = self.firstTimeserie.data.next_12_hours!
         
         print(self.coordinates)
+        
     }
     
     var ApiResponse: MetApiResponse
     
-    let updatetAt: String
+    var updatedAt: String
     
-    let coordinates: CLLocationCoordinate2D
+    var coordinates: CLLocationCoordinate2D
     
-    let units: Units
+    var units: Units
     
-    let timeSeries: [Timeserie]
+    var timeSeries: [Timeserie]
     
-    let firstTimeserie: Timeserie
+    var firstTimeserie: Timeserie
     
-    let instant: InstantData
+    var instant: InstantData
     
-    let nextOneHour: OneHoursData
+    var nextOneHour: OneHoursData
     
-    let nextSixHours: SixHoursData
+    var nextSixHours: SixHoursData
     
-    let nextTwelveHours: TwelveHoursData
+    var nextTwelveHours: TwelveHoursData
     
 }

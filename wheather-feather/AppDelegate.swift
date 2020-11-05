@@ -21,31 +21,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        setupLocationManager()
-        
-        
-        
-        fetchDataForLocation(coords: Locations.shared.hkLocation, saveToCacheAs: .specificLocation, completion: { error in
+        DispatchQueue.global(qos: .default).sync {
             
-            guard error == nil else {
-                print("💥💥💥💥")
-                print(error)
-                return
-            }
-            print("🎓Fetched data for HK!")
-            SpecificLocationWeather.shared.updateWeatherData()
-        })
+            setupLocationManager()
+            
+            fetchDataFrom(coordinates: Locations.shared.specific,
+                          saveToCacheAs: .specificLocation,
+                          completion: { error in
+                            
+                            guard error == nil else {
+                                print("💥💥💥💥")
+                                print(error!)
+                                return
+                            }
+                            print("🎓Fetched data for HK!")
+                            SpecificLocationWeather.shared.updateWeatherData()
+                          })
+            
+        }
         
         return true
     }
-
-
+    
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.
         // Use this method to select a configuration to create the new scene with.
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         
     }
@@ -59,13 +63,16 @@ extension AppDelegate: CLLocationManagerDelegate {
             return
         }
         
-        Locations.shared.myLocation = currentLocationCoordinates
+        Locations.shared.current = currentLocationCoordinates
         
-        fetchDataForLocation(coords: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {error in
+        fetchDataFrom(coordinates: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {error in
             
-            guard error == nil else {
+            if let error = error {
                 print("💥💥💥💥")
-                print(error)
+                
+                let errDict:[String: Error] = ["error": error]
+                
+                NotificationCenter.default.post(name: WeatherDataNotifications.fetchFailed, object: nil, userInfo: errDict)
                 return
             }
             

@@ -22,11 +22,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        NotificationCenter.default.addObserver(
-            self,
-            selector: #selector(locationUpdated),
-            name: WeatherDataNotifications.currentLocationUpdated,
-            object: nil)
+        
         
         data = CurrentLocationWeather.shared
         
@@ -59,6 +55,34 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController {
     
+    func setupNotificationObservers() {
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(locationUpdated),
+            name: WeatherDataNotifications.currentLocationUpdated,
+            object: nil)
+        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(handleErrorNotification(_:)),
+            name: WeatherDataNotifications.fetchFailed,
+            object: nil)
+        
+    }
+    
+    @objc func handleErrorNotification(_ notification: Notification) {
+        
+        if let err = notification.userInfo?["error"] as? Error {
+                
+            displayAlert(err, to: self)
+            
+        }
+        
+        
+        
+    }
+    
     func displayRainDrops() {
         
         /**
@@ -69,7 +93,7 @@ extension HomeViewController {
         let maxX = UIScreen.main.bounds.maxX
         let minX = UIScreen.main.bounds.minX
         let maxY = UIScreen.main.bounds.maxY
-        let minY = UIScreen.main.bounds.minY
+        _ = UIScreen.main.bounds.minY
         
         // Here we could f.ex say 1...percipitationAmout * 100,
         // And the droplets would be raltive to the amount of rain :)
@@ -185,11 +209,6 @@ extension HomeViewController {
             homeImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
             homeImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
         ])
-        
-        
-        if let iconName = CurrentLocationWeather.shared.nextTwelveHours.summary?.symbol_code {
-            
-        }
         
     }
     

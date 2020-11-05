@@ -11,7 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     
-    var myLocation = Locations.shared.myLocation
+    var myLocation = Locations.shared.current
     
     let mapView = MKMapView()
     let mapForecastView = MapForecastView()
@@ -44,7 +44,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        myLocation = Locations.shared.myLocation
+        myLocation = Locations.shared.current
     }
     
 }
@@ -74,7 +74,7 @@ extension MapViewController {
     
     @objc func locationUpdated() {
         
-        myLocation = Locations.shared.myLocation
+        myLocation = Locations.shared.current
         
         DispatchQueue.main.async {
             self.setMyPointAnnotation()
@@ -119,10 +119,11 @@ extension MapViewController: UIGestureRecognizerDelegate {
         print("User interactive triggered!")
         
         print("Touched: \(coordinate.latitude) / \(coordinate.longitude)")
-        Locations.shared.pinLocation = coordinate
+        Locations.shared.specific = coordinate
         self.tapAnnotation.coordinate = coordinate
         self.mapView.addAnnotation(self.tapAnnotation)
-        fetchDataForLocation(coords: coordinate, saveToCacheAs: .specificLocation, completion: {error in
+        
+        fetchDataFrom(coordinates: coordinate, saveToCacheAs: .specificLocation) { error in
             
             if let error = error {
                 
@@ -143,24 +144,11 @@ extension MapViewController: UIGestureRecognizerDelegate {
                     self.mapForecastView.setNeedsLayout()
                 }
             }
-        })
+        }
+        
     }
 }
 
-func displayAlert(_ err: Error, to parent: UIViewController) {
-    
-    let msg = "\(err.localizedDescription)\n Check your connection and try again."
-    let alertController = UIAlertController(title: "🚧 Hold up! 🚧", message: msg, preferredStyle: .alert)
-    let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-    alertController.addAction(alertAction)
-    
-    print("💥💥💥💥")
-    print(err)
-    
-    DispatchQueue.main.async {
-        parent.present(alertController, animated: true, completion: nil)
-    }
-}
 
 // MARK: UISwitch
 extension MapViewController {
@@ -190,7 +178,7 @@ extension MapViewController {
             centerMapToMyLocation()
             mapView.addAnnotation(myPointAnnotation)
             mapView.removeAnnotation(tapAnnotation)
-            Locations.shared.pinLocation = nil
+            Locations.shared.specific = nil
             mapForecastView.setNeedsLayout()
         }
         

@@ -18,7 +18,6 @@ import Foundation
 class SpecificLocationWeather: WeatherData {
     
     private init() {
-        
         print("Init new specific weather!🌧")
         super.init(for: .specificLocation)
     }
@@ -33,8 +32,6 @@ extension SpecificLocationWeather: WeatherDataDelegate {
         
         // Resets the instance
         SpecificLocationWeather.shared = SpecificLocationWeather()
-        
-        print()
         
     }
     
@@ -64,7 +61,7 @@ extension SpecificLocationWeather: WeatherDataDelegate {
     
     func getUpdatedAt() -> String {
         
-        let date = convertIsoTo(date: updatetAt)!
+        let date = convertIsoTo(date: updatedAt)!
         
         return getDateString(from: date)
         

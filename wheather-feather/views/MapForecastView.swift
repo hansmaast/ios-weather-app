@@ -25,8 +25,8 @@ class MapForecastView: UIView {
         
         //DispatchQueue.main.async { [self] in
             
-            if let pinLocation = Locations.shared.pinLocation {
-                setupLabels(coor: pinLocation)
+            if let specificLocation = Locations.shared.specific {
+                setupLabels(coor: specificLocation)
             }
             else {
                 setupLabels()
@@ -83,7 +83,7 @@ extension MapForecastView {
 // MARK: Labels
 extension MapForecastView {
     
-    func setupLabels(coor: CLLocationCoordinate2D = Locations.shared.myLocation!) {
+    func setupLabels(coor: CLLocationCoordinate2D = Locations.shared.current!) {
         
         let latString = getCoordString(coor: coor.latitude)
         let lonString = getCoordString(coor: coor.longitude)
@@ -94,7 +94,7 @@ extension MapForecastView {
         lonLabel.text = "Longitude \(lonString)"
         lonLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         
-        if let weatherData = getWeatherDataFromCache(fileName: .specificLocation)?.properties
+        if let weatherData = try! getDataFromCache(fileName: .specificLocation)?.properties
         {
             if let temp = weatherData.timeseries[0].data.instant?.details?.air_temperature {
                 let unit = weatherData.meta.units.air_temperature
@@ -121,7 +121,7 @@ extension MapForecastView {
             imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: Dimensions.shared.larger32 * -1),
         ])
         
-        if let weatherData = getWeatherDataFromCache(fileName: .specificLocation)?.properties.timeseries[0].data,
+        if let weatherData = try! getDataFromCache(fileName: .specificLocation)?.properties.timeseries[0].data,
            let iconName = weatherData.next_6_hours?.summary?.symbol_code {
             print("Icon name: \(iconName)")
             imageView.image = UIImage(named: iconName)
