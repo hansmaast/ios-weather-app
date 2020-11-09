@@ -8,12 +8,20 @@
 import Foundation
 
 func fetchAndSaveToCache(from url: String, cacheFileName: WeatherDataFileName, completion: @escaping FetchFromApiCompletion) {
-    print("⏺ ⏺ ⏺ Here")
-    if let response = fetchData(from: url, completion: completion) {
-        print("⏺ ⏺ ⏺")
-        debugPrint(response)
-        // save result to disk
-        saveToCache(data: response, fileName: cacheFileName, completion: completion)
+
+    fetchData(from: url) { error, data in
         
+        if let error = error {
+            print("Error:")
+            print(error)
+            completion(error, data)
+        }
+        
+        if let data = data {
+            // save result to disk
+            saveToCache(data: data, fileName: cacheFileName, completion: completion)
+        }
+        
+                
     }
 }

@@ -33,6 +33,8 @@ struct WeatherDataNotifications {
     
     static let fetchFailed = Notification.Name("currentLocationUpdate")
     static let currentLocationUpdated = Notification.Name("currentLocationUpdate")
+    static let currentLocationFetchDone = Notification.Name("currentLocationFetchDone")
+    static let specificLocationFetchDone = Notification.Name("specificLocationFetchDone")
     
 }
 

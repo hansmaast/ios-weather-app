@@ -17,12 +17,12 @@ import Foundation
 
 class SpecificLocationWeather: WeatherData {
     
-    private init() {
+    init() {
         print("Init new specific weather!🌧")
         super.init(for: .specificLocation)
     }
     
-    static var shared = SpecificLocationWeather()
+    static var shared: SpecificLocationWeather?
     
 }
 

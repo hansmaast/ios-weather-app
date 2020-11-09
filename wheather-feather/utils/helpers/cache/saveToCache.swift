@@ -17,18 +17,18 @@ func saveToCache(data: Data, fileName: WeatherDataFileName, completion: FetchFro
             
             switch fileName {
             case .currentLocation:
-                CurrentLocationWeather.shared.updateWeatherData()
+                CurrentLocationWeather.shared?.updateWeatherData()
             case .specificLocation:
-                SpecificLocationWeather.shared.updateWeatherData()
+                SpecificLocationWeather.shared?.updateWeatherData()
             }
             
             print("Sucsess!💾")
             
-            completion(nil)
+            completion(nil, data)
         }
         else {
             print("Could not save to disk..")
-            completion(WeatherError.general(msg: "Could not save to disk.."))
+            completion(WeatherError.general(msg: "Could not save to disk.."), data)
         }
         
     }

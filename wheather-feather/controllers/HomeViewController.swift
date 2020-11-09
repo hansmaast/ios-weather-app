@@ -21,10 +21,25 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+      
         
-        
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(self.renderLayout),
+            name: WeatherDataNotifications.currentLocationFetchDone,
+            object: nil)
         
         data = CurrentLocationWeather.shared
+        
+        print("Home did load!")
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
+        data = CurrentLocationWeather.shared
+        
+        checkIfRain()
         
         setupSwipeGestures()
         
@@ -36,16 +51,13 @@ class HomeViewController: UIViewController {
         
         setupDateLabel()
         
-        print("Home did load!")
-        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        
-        checkIfRain()
-        
-        data = CurrentLocationWeather.shared
-        
+    @objc func renderLayout() {
+        DispatchQueue.main.async {
+            self.viewWillAppear(true)
+        }
+        print("🌧 🔆 🌤")
     }
     
     
@@ -74,7 +86,7 @@ extension HomeViewController {
     @objc func handleErrorNotification(_ notification: Notification) {
         
         if let err = notification.userInfo?["error"] as? Error {
-                
+            
             displayAlert(err, to: self)
             
         }
@@ -86,7 +98,7 @@ extension HomeViewController {
     func displayRainDrops() {
         
         /**
-                    Droplets found here:
+         Droplets found here:
          Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
          */
         
@@ -98,7 +110,7 @@ extension HomeViewController {
         // Here we could f.ex say 1...percipitationAmout * 100,
         // And the droplets would be raltive to the amount of rain :)
         for n in 1...100 {
-        
+            
             let randomRectSize = CGFloat.random(in: 5...25)
             
             let duration = randomRectSize / 15
@@ -113,10 +125,10 @@ extension HomeViewController {
                            delay: Double(n) * 0.01,
                            options: [.repeat, .preferredFramesPerSecond60, .curveEaseIn],
                            animations: {
-                
-                rainDrop.transform = CGAffineTransform(translationX: 0, y: maxY)
-                
-            })
+                            
+                            rainDrop.transform = CGAffineTransform(translationX: 0, y: maxY)
+                            
+                           })
             
             view.addSubview(rainDrop)
         }
@@ -172,30 +184,31 @@ extension HomeViewController {
                        options: [.repeat, .preferredFramesPerSecond60, .curveLinear],
                        animations: {
                         self.homeImageView.transform = CGAffineTransform(rotationAngle: CGFloat.pi)
-        })
+                       })
         
         UIView.animate(withDuration: 2.0,
                        delay: 0,
                        options: [.preferredFramesPerSecond60, .curveEaseIn],
                        animations: {
                         self.view.backgroundColor = .yellow
-        })
+                       })
         
     }
     
     func checkIfRain() {
         
-        if let data = data {
-            
-            if data.isRainNextTwelveHours() {
-                homeImageView.image = UIImage(named: "umbrella")
-                displayRainDrops()
-            } else {
-                homeImageView.image = UIImage(named: "sun")
-                displaySunAnimation()
-            }
-            
+        
+        
+        if ((data?.isRainNextTwelveHours()) != nil) {
+            homeImageView.image = UIImage(named: "umbrella")
+            textLabel.text = "Don't forget your umbrella!"
+            displayRainDrops()
+        } else {
+            homeImageView.image = UIImage(named: "sun")
+            displaySunAnimation()
         }
+        
+        
         
     }
     
@@ -229,7 +242,7 @@ extension HomeViewController {
         
         view.addSubview(textLabel)
         textLabel.translatesAutoresizingMaskIntoConstraints = false
-        textLabel.text = data!.getHomeText()
+        textLabel.text = data?.getHomeText()
         textLabel.font = titleLabel.font.withSize(Dimensions.shared.large20)
         NSLayoutConstraint.activate([
             textLabel.topAnchor.constraint(equalTo: homeImageView.bottomAnchor, constant: Dimensions.shared.large24 * 2),
@@ -241,7 +254,7 @@ extension HomeViewController {
     func setupDateLabel() {
         view.addSubview(dateLabel)
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.text = data!.getUpdatedAt()
+        dateLabel.text = data?.getUpdatedAt()
         dateLabel.font = textLabel.font.withSize(Dimensions.shared.small12)
         NSLayoutConstraint.activate([
             dateLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: Dimensions.shared.small8 * -1),

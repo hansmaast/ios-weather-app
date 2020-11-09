@@ -22,7 +22,7 @@ struct Locations {
     
     var specific: CLLocationCoordinate2D? = nil
     var pinLocation: CLLocationCoordinate2D? = nil
-    var current: CLLocationCoordinate2D? = nil {
+    var current: CLLocationCoordinate2D? = Coordinates.shared.HK {
         didSet {
             // do something when a new location is set
             print("New Location set!")

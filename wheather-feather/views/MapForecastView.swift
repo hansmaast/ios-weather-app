@@ -19,23 +19,25 @@ class MapForecastView: UIView {
     let stack = UIStackView()
     let imageView = UIImageView()
     
+    let data = SpecificLocationWeather.shared
+    
     override func layoutSubviews() {
         
         print("Laying out..")
         
         //DispatchQueue.main.async { [self] in
-            
-            if let specificLocation = Locations.shared.specific {
-                setupLabels(coor: specificLocation)
-            }
-            else {
-                setupLabels()
-            }
-            
-            setupStackView()
-            
-            setupImageView()
-            
+        
+        if let specificLocation = Locations.shared.specific {
+            setupLabels(coor: specificLocation)
+        }
+        else {
+            setupLabels()
+        }
+        
+        setupStackView()
+        
+        setupImageView()
+        
         //}
         
     }
@@ -94,15 +96,10 @@ extension MapForecastView {
         lonLabel.text = "Longitude \(lonString)"
         lonLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         
-        if let weatherData = try! getDataFromCache(fileName: .specificLocation)?.properties
-        {
-            if let temp = weatherData.timeseries[0].data.instant?.details?.air_temperature {
-                let unit = weatherData.meta.units.air_temperature
-                print("Temp: \(temp) \(unit)")
-                
-                tempLabel.text = "Temp: \(temp) \(unit)"
-                tempLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
-            }
+        if let temp = data?.instant.details?.air_temperature,
+           let unit = data?.units.air_temperature {
+            tempLabel.text = "Temp: \(temp) \(unit)"
+            tempLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         }
     }
 }
@@ -121,9 +118,7 @@ extension MapForecastView {
             imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: Dimensions.shared.larger32 * -1),
         ])
         
-        if let weatherData = try! getDataFromCache(fileName: .specificLocation)?.properties.timeseries[0].data,
-           let iconName = weatherData.next_6_hours?.summary?.symbol_code {
-            print("Icon name: \(iconName)")
+        if let iconName = data?.nextSixHours.summary?.symbol_code {
             imageView.image = UIImage(named: iconName)
         }
     }

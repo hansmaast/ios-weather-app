@@ -9,11 +9,11 @@ import Foundation
 
 class CurrentLocationWeather: WeatherData {
     
-    private init() {
+    init() {
         super.init(for: .currentLocation)
     }
     
-    static var shared = CurrentLocationWeather()
+    static var shared: CurrentLocationWeather?
     
 }
 

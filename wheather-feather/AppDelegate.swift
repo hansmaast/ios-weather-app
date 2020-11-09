@@ -21,13 +21,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
-        DispatchQueue.global(qos: .default).sync {
-            
             setupLocationManager()
             
             fetchDataFrom(coordinates: Locations.shared.specific,
                           saveToCacheAs: .specificLocation,
-                          completion: { error in
+                          completion: { error, data in
                             
                             guard error == nil else {
                                 print("💥💥💥💥")
@@ -35,10 +33,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                 return
                             }
                             print("🎓Fetched data for HK!")
-                            SpecificLocationWeather.shared.updateWeatherData()
+                            SpecificLocationWeather.shared = SpecificLocationWeather()
+                            NotificationCenter.default.post(name: WeatherDataNotifications.specificLocationFetchDone, object: nil)
                           })
-            
-        }
         
         return true
     }
@@ -65,7 +62,7 @@ extension AppDelegate: CLLocationManagerDelegate {
         
         Locations.shared.current = currentLocationCoordinates
         
-        fetchDataFrom(coordinates: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {error in
+        fetchDataFrom(coordinates: currentLocationCoordinates, saveToCacheAs: .currentLocation, completion: {error, data in
             
             if let error = error {
                 print("💥💥💥💥")
@@ -77,7 +74,8 @@ extension AppDelegate: CLLocationManagerDelegate {
             }
             
             print("📍Fetched data for current location!")
-            CurrentLocationWeather.shared.updateWeatherData()
+            CurrentLocationWeather.shared = CurrentLocationWeather()
+            NotificationCenter.default.post(name: WeatherDataNotifications.currentLocationFetchDone, object: nil)
         })
         
         NotificationCenter.default.post(name: WeatherDataNotifications.currentLocationUpdated, object: nil)
