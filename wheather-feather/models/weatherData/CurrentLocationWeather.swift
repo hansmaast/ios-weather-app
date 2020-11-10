@@ -25,6 +25,34 @@ extension CurrentLocationWeather: WeatherDataDelegate {
         CurrentLocationWeather.shared = CurrentLocationWeather()
     }
     
+    func getStartingIndexOfDays() -> [[String: Int]]? {
+        
+        let now = Date.init()
+        print(now)
+        
+        guard timeSeries != nil else { return nil }
+        
+        var currentDay = getNameOfDay(for: convertIsoTo(date: timeSeries![0].time)!)
+        
+        var  daysStartingIndex: [[String: Int]] = [[currentDay: 0]]
+        
+        for (i,t) in timeSeries!.enumerated() {
+            if let date = convertIsoTo(date: t.time) {
+                let day = getNameOfDay(for: date)
+                if currentDay !=  day {
+                    currentDay = day
+                    daysStartingIndex.append([currentDay: i])
+                }
+            }
+        }
+        
+        print(daysStartingIndex)
+        print("Number of days: \(daysStartingIndex.count)")
+        
+        return daysStartingIndex
+
+    }
+    
     
     func getPropertiesOfFirstTimeSerieData() -> [TimeSerieProps]? {
         
