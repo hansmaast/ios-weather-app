@@ -12,7 +12,7 @@ protocol WeatherDataDelegate {
     
     func getPropertiesOfFirstTimeSerieData() -> [TimeSerieProps]?
     
-    func getUpdatedAt() -> String
+    func getUpdatedAt() -> String?
     
     func getTwelveHourSymbolCode() -> String?
     
@@ -52,51 +52,49 @@ class WeatherData {
         
         print("🕋 🕋")
         
-        self.ApiResponse = try! getDataFromCache(fileName: location)!
+        self.ApiResponse = try! getDataFromCache(fileName: location)
         
-        self.updatedAt = ApiResponse.properties.meta.updated_at
+        self.updatedAt = ApiResponse?.properties.meta.updated_at
         
         self.coordinates = CLLocationCoordinate2D(
-            latitude: ApiResponse.geometry.coordinates[1],
-            longitude: ApiResponse.geometry.coordinates[0]
+            latitude: (ApiResponse?.geometry.coordinates[1])!,
+            longitude: (ApiResponse?.geometry.coordinates[0])!
         )
         
-        self.units = self.ApiResponse.properties.meta.units
+        self.units = self.ApiResponse?.properties.meta.units
         
-        self.timeSeries = self.ApiResponse.properties.timeseries
+        self.timeSeries = self.ApiResponse?.properties.timeseries
         
-        self.firstTimeserie = (self.timeSeries.first)!
+        self.firstTimeserie = (self.timeSeries?.first)!
+    
+        self.instant = self.firstTimeserie?.data.instant
         
-        self.instant = self.firstTimeserie.data.instant!
+        self.nextOneHour = self.firstTimeserie?.data.next_1_hours
         
-        self.nextOneHour = self.firstTimeserie.data.next_1_hours!
+        self.nextSixHours = self.firstTimeserie?.data.next_6_hours
         
-        self.nextSixHours = self.firstTimeserie.data.next_6_hours!
-        
-        self.nextTwelveHours = self.firstTimeserie.data.next_12_hours!
-        
-        print(self.coordinates)
+        self.nextTwelveHours = self.firstTimeserie?.data.next_12_hours
         
     }
     
-    var ApiResponse: MetApiResponse
+    var ApiResponse: MetApiResponse?
     
-    var updatedAt: String
+    var updatedAt: String?
     
-    var coordinates: CLLocationCoordinate2D
+    var coordinates: CLLocationCoordinate2D?
     
-    var units: Units
+    var units: Units?
     
-    var timeSeries: [Timeserie]
+    var timeSeries: [Timeserie]?
     
-    var firstTimeserie: Timeserie
+    var firstTimeserie: Timeserie?
     
-    var instant: InstantData
+    var instant: InstantData?
     
-    var nextOneHour: OneHoursData
+    var nextOneHour: OneHoursData?
     
-    var nextSixHours: SixHoursData
+    var nextSixHours: SixHoursData?
     
-    var nextTwelveHours: TwelveHoursData
+    var nextTwelveHours: TwelveHoursData?
     
 }

@@ -36,40 +36,41 @@ extension SpecificLocationWeather: WeatherDataDelegate {
     }
     
     func getPropertiesOfFirstTimeSerieData() -> [TimeSerieProps]? {
-        
-        if let instant = firstTimeserie.data.instant,
-           let oneHour = firstTimeserie.data.next_1_hours,
-           let sixHours = firstTimeserie.data.next_6_hours,
-           let twelveHours = firstTimeserie.data.next_12_hours
-        {
-            let props: [TimeSerieProps] = [
-                .Instant(instant),
-                .OneHour(oneHour),
-                .SixHours(sixHours),
-                .TwelveHours(twelveHours),
-            ]
             
-            return props
-        }
+        if let instant = firstTimeserie?.data.instant,
+           let oneHour = firstTimeserie?.data.next_1_hours,
+           let sixHours = firstTimeserie?.data.next_6_hours,
+           let twelveHours = firstTimeserie?.data.next_12_hours
+            {
+                let props: [TimeSerieProps] = [
+                    .Instant(instant),
+                    .OneHour(oneHour),
+                    .SixHours(sixHours),
+                    .TwelveHours(twelveHours),
+                ]
+                
+                return props
+            }
         
         return nil
     }
     
     func getTimeSerieAt(index: Int, for location: WeatherDataFileName) -> Timeserie {
-        return timeSeries[index]
+        return timeSeries![index]
     }
     
-    func getUpdatedAt() -> String {
-        
-        let date = convertIsoTo(date: updatedAt)!
-        
-        return getDateString(from: date)
-        
+    func getUpdatedAt() -> String? {
+        if let isoString = updatedAt {
+            if let date = convertIsoTo(date: isoString) {
+                return getDateString(from: date)
+            }
+        }   
+        return nil
     }
     
     func getTwelveHourSymbolCode() -> String? {
         
-        if let symbolCode = nextTwelveHours.summary?.symbol_code {
+        if let symbolCode = nextTwelveHours?.summary?.symbol_code {
             return symbolCode
         }
         
