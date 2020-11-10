@@ -19,26 +19,21 @@ class MapForecastView: UIView {
     let stack = UIStackView()
     let imageView = UIImageView()
     
-    let data = SpecificLocationWeather.shared
+    var temp: Float? = CurrentLocationWeather.shared?.instant?.details?.air_temperature
+    var unit: String? = CurrentLocationWeather.shared?.units?.air_temperature
+    var iconName: String? = CurrentLocationWeather.shared?.nextOneHour?.summary?.symbol_code
     
     override func layoutSubviews() {
         
         print("Laying out..")
         
-        //DispatchQueue.main.async { [self] in
+        assignTemptAndIconName()
         
-        if let specificLocation = Locations.shared.specific {
-            setupLabels(coor: specificLocation)
-        }
-        else {
-            setupLabels()
-        }
+        setupLabels()
         
         setupStackView()
         
         setupImageView()
-        
-        //}
         
     }
     
@@ -61,6 +56,18 @@ class MapForecastView: UIView {
 
 // MARK: Stack view
 extension MapForecastView {
+    
+    func assignTemptAndIconName() {
+        guard temp == nil,
+              unit == nil,
+              iconName == nil
+        else { return }
+        
+        temp = CurrentLocationWeather.shared?.instant?.details?.air_temperature
+        unit = CurrentLocationWeather.shared?.units?.air_temperature
+        iconName = CurrentLocationWeather.shared?.nextOneHour?.summary?.symbol_code
+        
+    }
     
     func setupStackView() {
         
@@ -85,7 +92,7 @@ extension MapForecastView {
 // MARK: Labels
 extension MapForecastView {
     
-    func setupLabels(coor: CLLocationCoordinate2D = Locations.shared.current!) {
+    func setupLabels(coor: CLLocationCoordinate2D = Locations.shared.specific!) {
         
         let latString = getCoordString(coor: coor.latitude)
         let lonString = getCoordString(coor: coor.longitude)
@@ -96,8 +103,8 @@ extension MapForecastView {
         lonLabel.text = "Longitude \(lonString)"
         lonLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         
-        if let temp = data?.instant.details?.air_temperature,
-           let unit = data?.units.air_temperature {
+        if let temp = self.temp,
+           let unit = self.unit {
             tempLabel.text = "Temp: \(temp) \(unit)"
             tempLabel.font = lonLabel.font.withSize(Dimensions.shared.large20)
         }
@@ -118,7 +125,7 @@ extension MapForecastView {
             imageView.rightAnchor.constraint(equalTo: rightAnchor, constant: Dimensions.shared.larger32 * -1),
         ])
         
-        if let iconName = data?.nextSixHours.summary?.symbol_code {
+        if let iconName = self.iconName {
             imageView.image = UIImage(named: iconName)
         }
     }

@@ -11,6 +11,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     
+    
     var myLocation = Locations.shared.current
     
     let mapView = MKMapView()
@@ -20,6 +21,7 @@ class MapViewController: UIViewController {
     let myPointAnnotation = MKPointAnnotation()
     
     let switchMapMode = UISwitch()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -108,13 +110,10 @@ extension MapViewController: UIGestureRecognizerDelegate {
     
     @objc func handleTap(gestureRecognizer: UILongPressGestureRecognizer) {
         
-        // TODO: Make it so the data updates on click. It is on click behind currently.
-        
         guard switchMapMode.isOn else { return }
         
         let location = gestureRecognizer.location(in: mapView)
         let coordinate = mapView.convert(location, toCoordinateFrom: mapView)
-        
         
         print("User interactive triggered!")
         
@@ -123,7 +122,7 @@ extension MapViewController: UIGestureRecognizerDelegate {
         self.tapAnnotation.coordinate = coordinate
         self.mapView.addAnnotation(self.tapAnnotation)
         
-        fetchDataFrom(coordinates: coordinate, saveToCacheAs: .specificLocation) { error in
+        fetchDataFrom(coordinates: coordinate, saveToCacheAs: .specificLocation) { error, data in
             
             if let error = error {
                 
@@ -136,8 +135,12 @@ extension MapViewController: UIGestureRecognizerDelegate {
             
             // Updates UI when fetching is finished...
             
-            DispatchQueue.global(qos: .utility).async {
-                SpecificLocationWeather.shared.updateWeatherData()
+            DispatchQueue.global(qos: .userInteractive).async {
+                SpecificLocationWeather.shared?.updateWeatherData()
+                
+                self.mapForecastView.temp = SpecificLocationWeather.shared?.instant?.details?.air_temperature
+                self.mapForecastView.unit = SpecificLocationWeather.shared?.units?.air_temperature
+                self.mapForecastView.iconName = SpecificLocationWeather.shared?.nextOneHour?.summary?.symbol_code
                 
                 DispatchQueue.main.async {
                     // Updade forecast view
@@ -175,10 +178,17 @@ extension MapViewController {
         }
         else {
             print("Switch is off!")
+            
+            Locations.shared.specific = myLocation
+            
+            mapForecastView.temp = CurrentLocationWeather.shared?.instant?.details?.air_temperature
+            mapForecastView.unit = CurrentLocationWeather.shared?.units?.air_temperature
+            mapForecastView.iconName = CurrentLocationWeather.shared?.nextOneHour?.summary?.symbol_code
+            
             centerMapToMyLocation()
             mapView.addAnnotation(myPointAnnotation)
             mapView.removeAnnotation(tapAnnotation)
-            Locations.shared.specific = nil
+            
             mapForecastView.setNeedsLayout()
         }
         
