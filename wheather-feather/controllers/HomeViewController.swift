@@ -31,8 +31,6 @@ class HomeViewController: UIViewController {
         
         data = CurrentLocationWeather.shared
         
-        print("Home did load!")
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {

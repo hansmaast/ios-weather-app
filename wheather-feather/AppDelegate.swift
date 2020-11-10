@@ -7,7 +7,6 @@
 
 import UIKit
 import CoreData
-import Network
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {

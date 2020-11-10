@@ -145,9 +145,9 @@
 		796C8DCE254724EF009A1E46 /* models */ = {
 			isa = PBXGroup;
 			children = (
-				796C8DC12546E997009A1E46 /* network */,
 				796C8DE425488B59009A1E46 /* Locations.swift */,
 				79F33662255495E3004F77BB /* errors */,
+				796C8DC12546E997009A1E46 /* network */,
 				79F33660255495B9004F77BB /* weatherData */,
 			);
 			path = models;

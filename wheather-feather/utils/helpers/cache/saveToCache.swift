@@ -15,13 +15,6 @@ func saveToCache(data: Data, fileName: WeatherDataFileName, completion: FetchFro
             .default
             .createFile(atPath: url.path, contents: data, attributes: nil) {
             
-            switch fileName {
-            case .currentLocation:
-                CurrentLocationWeather.shared?.updateWeatherData()
-            case .specificLocation:
-                SpecificLocationWeather.shared?.updateWeatherData()
-            }
-            
             print("Sucsess!💾")
             
             completion(nil, data)

@@ -29,7 +29,7 @@ class RootController: UITabBarController {
         // TODO: Switch these back
         let controllers = [ homeViewController, mapViewController, forecastViewController, ]
         
-        controllers.map { $0.view.backgroundColor = .white }
+        let _ = controllers.map { $0.view.backgroundColor = .white }
         
         // Maps a navigation controller to each of the "main" controllers
         self.viewControllers = controllers.map {

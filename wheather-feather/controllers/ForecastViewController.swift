@@ -37,10 +37,14 @@ class ForecastViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
 
         DispatchQueue.global().async { [self] in
-            properties = SpecificLocationWeather.shared.getPropertiesOfFirstTimeSerieData()!
-            
-            DispatchQueue.main.async {
-                tableView.reloadData()
+            if let props = SpecificLocationWeather.shared?.getPropertiesOfFirstTimeSerieData() {
+                
+                properties = props
+                
+                DispatchQueue.main.async {
+                    tableView.reloadData()
+                }
+                
             }
         }
     }
@@ -62,8 +66,6 @@ extension ForecastViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.backgroundColor = .red
         
-    
-        
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             tableView.bottomAnchor.constraint(equalTo: footer.topAnchor),
@@ -80,7 +82,6 @@ extension ForecastViewController {
             footer.heightAnchor.constraint(equalToConstant: 50),
             footer.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
         ])
-        
     }
     
     func setupFooterLabel() {
