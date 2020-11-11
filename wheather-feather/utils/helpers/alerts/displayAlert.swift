@@ -7,7 +7,7 @@
 
 import UIKit
 
-func displayAlert(_ err: Error, to parent: UIViewController, msg: String = "") {
+func displayAlert(_ err: Error, to parent: UIViewController) {
     
     let msg = err.localizedDescription
     let alertController = UIAlertController(title: "🚧 Hold up! 🚧", message: msg, preferredStyle: .alert)

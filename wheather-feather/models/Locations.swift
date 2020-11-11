@@ -8,25 +8,14 @@
 import Foundation
 import CoreLocation
 
-struct Coordinates {
-    private init(){}
-    static let shared = Coordinates()
-    let HK = CLLocationCoordinate2D(latitude: 59.911166, longitude: 10.744810)
-}
-
 struct Locations {
     
     // sets specific location to HK coordinates
-    private init() { self.specific = Coordinates.shared.HK }
+    private init() { self.specific = Coordinates.HK }
     static var shared = Locations()
     
     var specific: CLLocationCoordinate2D? = nil
     var pinLocation: CLLocationCoordinate2D? = nil
-    var current: CLLocationCoordinate2D? = Coordinates.shared.HK {
-        didSet {
-            // do something when a new location is set
-            print("New Location set!")
-        }
-    }
+    var current: CLLocationCoordinate2D? = Coordinates.HK 
     
 }

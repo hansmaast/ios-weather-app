@@ -181,6 +181,9 @@ extension MapViewController {
             
             Locations.shared.specific = myLocation
             
+            SpecificLocationWeather.shared?.updateWeatherData()
+            
+            
             mapForecastView.temp = CurrentLocationWeather.shared?.instant?.details?.air_temperature
             mapForecastView.unit = CurrentLocationWeather.shared?.units?.air_temperature
             mapForecastView.iconName = CurrentLocationWeather.shared?.nextOneHour?.summary?.symbol_code

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		7933968425549DD1000B1019 /* json.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7933968325549DD1000B1019 /* json.swift */; };
 		795A6DC925498215000BF15A /* dimensons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 795A6DC825498215000BF15A /* dimensons.swift */; };
+		79636660255AC85A000E97E9 /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7963665F255AC85A000E97E9 /* PageViewController.swift */; };
 		796C8D8E2546D7C0009A1E46 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8D8D2546D7C0009A1E46 /* AppDelegate.swift */; };
 		796C8D902546D7C0009A1E46 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796C8D8F2546D7C0009A1E46 /* SceneDelegate.swift */; };
 		796C8D982546D7C0009A1E46 /* wheather_feather.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 796C8D962546D7C0009A1E46 /* wheather_feather.xcdatamodeld */; };
@@ -40,6 +41,7 @@
 /* Begin PBXFileReference section */
 		7933968325549DD1000B1019 /* json.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = json.swift; sourceTree = "<group>"; };
 		795A6DC825498215000BF15A /* dimensons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dimensons.swift; sourceTree = "<group>"; };
+		7963665F255AC85A000E97E9 /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
 		796C8D8A2546D7C0009A1E46 /* wheather-feather.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "wheather-feather.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		796C8D8D2546D7C0009A1E46 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		796C8D8F2546D7C0009A1E46 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -232,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				796C8DA52546D925009A1E46 /* RootController.swift */,
+				7963665F255AC85A000E97E9 /* PageViewController.swift */,
 				796C8DA82546D99D009A1E46 /* HomeViewController.swift */,
 				796C8DAB2546D9AA009A1E46 /* ForecastViewController.swift */,
 				796C8DAE2546D9B2009A1E46 /* MapViewController.swift */,
@@ -326,6 +329,7 @@
 				796C8DE525488B59009A1E46 /* Locations.swift in Sources */,
 				79781D332550456D00EE623E /* SpecificLocationWeatherData.swift in Sources */,
 				79F3364625549113004F77BB /* strings.swift in Sources */,
+				79636660255AC85A000E97E9 /* PageViewController.swift in Sources */,
 				796C8DA62546D925009A1E46 /* RootController.swift in Sources */,
 				79781D3025501F4200EE623E /* CurrentLocationWeather.swift in Sources */,
 				796C8D982546D7C0009A1E46 /* wheather_feather.xcdatamodeld in Sources */,

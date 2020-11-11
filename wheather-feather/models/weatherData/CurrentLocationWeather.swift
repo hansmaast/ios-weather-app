@@ -11,9 +11,12 @@ class CurrentLocationWeather: WeatherData {
     
     init() {
         super.init(for: .currentLocation)
+        self.forecastDaysWithStartingIndex = self.getStartingIndexOfDays()
     }
     
     static var shared: CurrentLocationWeather?
+    
+    var forecastDaysWithStartingIndex: [[String: Int]]?
     
 }
 

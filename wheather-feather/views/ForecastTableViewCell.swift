@@ -40,9 +40,8 @@ extension ForecastTableViewCell {
     
     private func setupContentView() {
         
-        self.layer.borderWidth = 1.5
-        self.contentView.layer.borderColor = UIColor.black.cgColor
         self.contentView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.1).isActive = true
+        self.contentView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
     }
     
     private func setupTimeLabel() {
