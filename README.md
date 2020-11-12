@@ -1,5 +1,10 @@
 # iOs-exam
 
+### The structure of the app:
+
+![inline](./img/structure-flow.png)
+*Illustration of the navigation flow. Made with [Excalidraw](https://excalidraw.com/).*
+
 ------
 
 ### How the app gets data:
@@ -32,6 +37,13 @@ Check out this illustration to get an overview:
 
 This application is made with a mixture of deep diggs into stackoverflow, google, <br/> 
 and the course material from [Beining & Bogen's](http://www.beiningbogen.no) iOS-programming [repository](https://github.com/BeiningBogen/iOS-Kristiania)
+<br/><br/>
+I decided to take programatically approach to the assignment, so no storyboard is used. <br/>
+This is just a personal preference, and i find it more fun and responsive doing it this way. <br/>
+There are probably loads of pros and cons regarding this approach vs using the Interface Builder. <br/>
+In my experience it gave me a great understanding of how things works "under the hood". <br/>
+
+
 
 
 ### Sources:
