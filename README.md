@@ -1,12 +1,13 @@
 # iOs-exam
 
----
-### How the app gets the data:
+------
 
-The apllication gets it's data from the norwegian [Meteorological Institute public API](https://api.met.no/weatherapi/locationforecast/2.0/documentation). <br />
-It uses version 2 of the compact location forecast.
+### How the app gets data:
 
-URLSession is used to fetch data from the endpoint. 
+- The apllication gets it's data from the norwegian [Meteorological Institute public API](https://api.met.no/weatherapi/locationforecast/2.0/documentation). <br />
+- It uses version 2 of the compact location forecast.
+- URLSession is used to fetch data from the endpoint. 
+- FileManager is used to store the response data on the device.
 
 This application stores the JSON response directly to the disk in two sepperate files. <br/>
 Each file represent different types of weatherforecasts:
@@ -21,10 +22,18 @@ Each file represent different types of weatherforecasts:
   - Since the forecast from the API is accurate down to 1km, the location accuracy is set to 1km.
   
 The application then goes to the cache and decodes the JSON data. <br/> 
-This enables offline forecasts for your current location (if you don't do alot of offline movement), <br/>  
+This enables offline forecasts for your current location (if you don't do alot of offline movement), <br/>
 and the last location you checked out on the map.
 
 ![inline](./img/app-flow.png)
+*Illustration of the data flow. Made with [Excalidraw](https://excalidraw.com/).*
+
+------
+
+### How I've worked to get this done
+
+This application is made with a mixture of deep diggs into stackoverflow, google, <br/> 
+and the course material from [Beining & Bogen's](http://www.beiningbogen.no) iOS-programming [repository](https://github.com/BeiningBogen/iOS-Kristiania)
 
 
 ### Sources:
