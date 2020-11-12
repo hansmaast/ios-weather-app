@@ -20,10 +20,8 @@ Each file represent different types of weatherforecasts:
   - Keeps the data for your current location.
   - This file gets updated at app launch, or when the CLLocationManager udates your location.
   - Since the forecast from the API is accurate down to 1km, the location accuracy is set to 1km.
-  
-The application then goes to the cache and decodes the JSON data. <br/> 
-This enables offline forecasts for your current location (if you don't do alot of offline movement), <br/>
-and the last location you checked out on the map.
+
+Check out this illustration to get an overview:
 
 ![inline](./img/app-flow.png)
 *Illustration of the data flow. Made with [Excalidraw](https://excalidraw.com/).*
