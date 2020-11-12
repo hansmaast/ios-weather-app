@@ -2,7 +2,7 @@
 
 ### The structure of the app:
 
-![inline](./img/structure-flow.png)
+![inline](./img/navigation-flow.png)
 *Illustration of the navigation flow. Made with [Excalidraw](https://excalidraw.com/).*
 
 ------
