@@ -1,6 +1,12 @@
 # iOs-exam
 
-### The structure of the app:
+### Application structure:
+
+- Data is stored in singleton instances. 
+- Acts as a "global state".
+- The instance gets initialized when det data is finished fetching.
+- When new data is fetch, the singleton gets reinitialized.
+- This is not "thread safe" (i think). 
 
 ![inline](./img/navigation-flow.png)
 *Illustration of the navigation flow. Made with [Excalidraw](https://excalidraw.com/).*
