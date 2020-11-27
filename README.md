@@ -2,11 +2,27 @@
 
 ### Application structure:
 
-- Data is stored in singleton instances. 
-- Acts as a "global state".
+- Data is stored in singleton instances, that acts as a "global state"". 
+
 - The instance gets initialized when det data is finished fetching.
+
 - When new data is fetch, the singleton gets reinitialized.
+
 - This is not "thread safe" (i think). 
+
+#### Navigation:
+
+- Consists of the following view controllers:
+
+    - The RootController, which is a UITabBarController enabling navigation between:
+    
+        - PageViewController, which lets you swipe through the forcasts of the coming days.
+        
+            - The PageViewController consists of multiple DayForcastViewControllers.
+            
+       - ForecastViewController, which consists of a table view displaying the weather for the nexxt twele hours.
+       
+       - MapForecastViewController, which consits of a MapView, and a MapForecastView displaying info for the selected location on the map.     
 
 ![inline](./img/navigation-flow.png)
 *Illustration of the navigation flow. Made with [Excalidraw](https://excalidraw.com/).*
@@ -16,20 +32,28 @@
 ### How the app gets data:
 
 - The apllication gets it's data from the norwegian [Meteorological Institute public API](https://api.met.no/weatherapi/locationforecast/2.0/documentation). <br />
+
 - It uses version 2 of the compact location forecast.
-- URLSession is used to fetch data from the endpoint. 
+
+- URLSession is used to fetch data from the endpoint.
+ 
 - FileManager is used to store the response data on the device.
 
 This application stores the JSON response directly to the disk in two sepperate files. <br/>
 Each file represent different types of weatherforecasts:
 
 * The specificWeatherForecast.json:
+   
    - Keeps the data for a specific location.
+   
    - This file gets updated each time you set a new pin on the map.
   
 * The currentWeatherForcast.json:
+
   - Keeps the data for your current location.
+  
   - This file gets updated at app launch, or when the CLLocationManager udates your location.
+  
   - Since the forecast from the API is accurate down to 1km, the location accuracy is set to 1km.
 
 Check out this illustration to get an overview:
@@ -48,8 +72,6 @@ I decided to take programatically approach to the assignment, so no storyboard i
 This is just a personal preference, and i find it more fun and responsive doing it this way. <br/>
 There are probably loads of pros and cons regarding this approach vs using the Interface Builder. <br/>
 In my experience it gave me a great understanding of how things works "under the hood". <br/>
-
-
 
 
 ### Sources:
