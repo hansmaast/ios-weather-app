@@ -1,5 +1,14 @@
 # iOs-exam
 
+####Built with: 
+- Xcode 12.1 
+    - Build version 12A7403
+- Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+    - Target: x86_64-apple-darwin19.5.0
+- iPhone 11 in simulator.
+
+---
+
 ### Application structure:
 
 - Data is stored in singleton instances, that acts as a "global state"". 
