@@ -1,9 +1,3 @@
-//
-//  AppDelegate.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 26/10/2020.
-//
 
 import UIKit
 import CoreData

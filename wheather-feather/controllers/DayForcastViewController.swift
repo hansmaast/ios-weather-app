@@ -1,15 +1,8 @@
-//
-//  HomeViewController.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 26/10/2020.
-//  Inpired by this post: https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
-//
 
 import UIKit
 import CoreLocation
 
-class HomeViewController: UIViewController {
+class DayForcastViewController: UIViewController {
     
     init(pageIndex: Int, dayWithStartingIndex: [String:Int]) {
         self.pageIndex = pageIndex
@@ -63,7 +56,7 @@ class HomeViewController: UIViewController {
 
 
 
-extension HomeViewController {
+extension DayForcastViewController {
     
     func setupNotificationObservers() {
         
@@ -94,13 +87,7 @@ extension HomeViewController {
     }
     
     func displayRainDrops() {
-        
-        /**
-         Droplets found here:
-         https://www.flaticon.com/authors/freepik
-         https://www.flaticon.com/
-         */
-        
+    
         let maxX = UIScreen.main.bounds.maxX
         let minX = UIScreen.main.bounds.minX
         let maxY = UIScreen.main.bounds.maxY

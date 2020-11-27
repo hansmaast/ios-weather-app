@@ -1,9 +1,3 @@
-//
-//  getDataFromCache.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 05/11/2020.
-//
 
 import Foundation
 

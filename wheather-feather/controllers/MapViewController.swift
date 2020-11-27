@@ -1,10 +1,3 @@
-//
-//  MapViewController.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 26/10/2020.
-//  Inspired by this:
-//  https://stackoverflow.com/questions/34431459/ios-swift-how-to-add-pinpoint-to-map-on-touch-and-get-detailed-address-of-th
 
 import UIKit
 import MapKit

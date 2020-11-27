@@ -1,9 +1,3 @@
-//
-//  dateAndTimeHelpers.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 28/10/2020.
-//
 
 import Foundation
 

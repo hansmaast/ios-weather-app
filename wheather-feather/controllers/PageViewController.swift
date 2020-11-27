@@ -1,5 +1,4 @@
 
-
 import UIKit
 
 
@@ -20,7 +19,7 @@ class PageViewController: UIViewController {
         if let days = data?.forecastDaysWithStartingIndex {
             print("Total days: \(days.count)")
             for (i, day) in days.enumerated() {
-                pages.append(HomeViewController(pageIndex: i, dayWithStartingIndex: day))
+                pages.append(DayForcastViewController(pageIndex: i, dayWithStartingIndex: day))
             }
             
             self.setupPageController()
@@ -71,7 +70,7 @@ extension PageViewController: UIPageViewControllerDataSource, UIPageViewControll
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         
-        guard let currentVC = viewController as? HomeViewController else {
+        guard let currentVC = viewController as? DayForcastViewController else {
             return nil
         }
         
@@ -90,7 +89,7 @@ extension PageViewController: UIPageViewControllerDataSource, UIPageViewControll
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         
-        guard let currentVC = viewController as? HomeViewController else {
+        guard let currentVC = viewController as? DayForcastViewController else {
             return nil
         }
         

@@ -1,17 +1,11 @@
-//
-//  MapForecastView.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 27/10/2020.
-//
+
+
 import Foundation
 import UIKit
 import CoreLocation
 
 class MapForecastView: UIView {
-    
-    // TODO: Make the temp go bakc agin when the switch is off..
-    
+        
     let latLabel = UILabel()
     let lonLabel = UILabel()
     let tempLabel = UILabel()

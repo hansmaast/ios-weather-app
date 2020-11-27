@@ -1,10 +1,3 @@
-//
-//  ForecastTableViewCell.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 26/10/2020.
-//  Inspired by this article:
-//  https://medium.com/cleansoftware/quickly-implement-tableview-collectionview-programmatically-df12da694af9
 
 import UIKit
 
@@ -24,9 +17,6 @@ class ForecastTableViewCell: UITableViewCell {
         setupCellImage()
         
         setupInfoLabel()
-        
-        // TODO: Check this for gettting some space between the cells:
-        // https://stackoverflow.com/questions/6216839/how-to-add-spacing-between-uitableviewcell
     
     }
     

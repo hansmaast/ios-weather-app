@@ -1,9 +1,4 @@
-//
-//  json.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 05/11/2020.
-//
+
 import Foundation
 
 func decodeJSON<T: Decodable>(to model: T.Type, from data: Data) throws -> T {

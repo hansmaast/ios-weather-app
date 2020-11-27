@@ -67,15 +67,28 @@ Check out this illustration to get an overview:
 
 ### How I've worked to get this done
 
-This application is made with a mixture of deep diggs into stackoverflow, google, <br/> 
-and the course material from [Beining & Bogen's](http://www.beiningbogen.no) iOS-programming [repository](https://github.com/BeiningBogen/iOS-Kristiania)
-<br/><br/>
-I decided to take programatically approach to the assignment, so no storyboard is used. <br/>
-This is just a personal preference, and i find it more fun and responsive doing it this way. <br/>
-There are probably loads of pros and cons regarding this approach vs using the Interface Builder. <br/>
-In my experience it gave me a great understanding of how things works "under the hood". <br/>
+This application is made with a mixture of deep diggs into stackoverflow, google, 
+and the course material from [Beining & Bogen's](http://www.beiningbogen.no) iOS-programming [repository](https://github.com/BeiningBogen/iOS-Kristiania).   
+
+I decided to take a programatically approach to the assignment, so no storyboard is used.
+This is just a personal preference, and i find it more fun and responsive doing it this way.   
+There are probably loads of pros and cons regarding this approach vs using the Interface Builder.
+In my experience it gave me a solid understanding of how things works "under the hood".   
 
 
-### Sources:
+#### Sources:
  - https://www.youtube.com/watch?v=sqo844saoC4&ab_channel=iOSAcademy
+ 
  - https://gist.github.com/saoudrizwan/b7ab1febde724c6f30d8a555ea779140
+ 
+ - https://stackoverflow.com/questions/25296691/get-users-current-location-coordinates
+ 
+ - https://medium.com/cleansoftware/quickly-implement-tableview-collectionview-programmatically-df12da694af9
+ 
+ - https://stackoverflow.com/questions/34431459/ios-swift-how-to-add-pinpoint-to-map-on-touch-and-get-detailed-address-of-th
+ 
+ - https://www.raywenderlich.com/5371-grand-central-dispatch-tutorial-for-swift-4-part-2-2
+ 
+ - Icons:
+    - https://www.flaticon.com/
+    - met.no's  [weather icons](https://api.met.no/weatherapi/weathericon/2.0/documentation)

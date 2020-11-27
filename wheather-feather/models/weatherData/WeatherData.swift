@@ -1,9 +1,3 @@
-//
-//  WeaterData.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 02/11/2020.
-//
 
 import Foundation
 import CoreLocation
@@ -24,11 +18,6 @@ protocol WeatherDataDelegate {
     
 }
 
-
-/**
- Inspired by the code from this article:
- https://www.raywenderlich.com/5371-grand-central-dispatch-tutorial-for-swift-4-part-2-2
- */
 struct WeatherDataNotifications {
     
     static let fetchFailed = Notification.Name("currentLocationUpdate")

@@ -1,17 +1,3 @@
-//
-//  SpecificLocationWeatherData.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 02/11/2020.
-//
-
-import Foundation
-//
-//  CurrentLocationWeather.swift
-//  wheather-feather
-//
-//  Created by Hans Maast on 02/11/2020.
-//
 
 import Foundation
 
