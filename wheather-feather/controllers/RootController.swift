@@ -42,7 +42,6 @@ class RootController: UITabBarController {
         mapViewController.title = "Map"
         mapViewController.tabBarItem = UITabBarItem(title: "Map", image: nil, selectedImage: nil)
         
-        // TODO: Switch these back
         let controllers = [ homeViewController, forecastViewController, mapViewController, ]
         
         let _ = controllers.map { $0.view.backgroundColor = .white }
@@ -55,8 +54,6 @@ class RootController: UITabBarController {
     }
     
     @objc func handleFetchFailed() {
-        print("FETCH FAILED!")
-        
         displayAlert(WeatherError.fetch(msg: "Not able to fetch new data.", code: nil), to: self)
     }
     

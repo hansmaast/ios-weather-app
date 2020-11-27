@@ -39,13 +39,17 @@ class PageViewController: UIViewController {
     
     private func setupPageController() {
         
-        self.pageController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal, options: nil)
+        self.pageController = UIPageViewController(transitionStyle: .scroll,
+                                                   navigationOrientation: .horizontal,
+                                                   options: nil)
 
         self.pageController?.dataSource = self
         self.pageController?.delegate = self
         
         self.addChild(self.pageController!)
+        
         let pageView = self.pageController!.view!
+        
         self.view.addSubview(pageView)
         pageView.backgroundColor = .clear
         pageView.translatesAutoresizingMaskIntoConstraints = false

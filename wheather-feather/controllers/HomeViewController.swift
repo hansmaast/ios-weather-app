@@ -17,13 +17,10 @@ class HomeViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
     
-    deinit {
-        print("Deinit 💣 💣 💣")
-    }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     let pageIndex: Int
     let dayWithStartingIndex: [String:Int]
     
@@ -39,21 +36,12 @@ class HomeViewController: UIViewController {
     
     lazy var dayIndex = dayWithStartingIndex.values.first
     lazy var timserie = CurrentLocationWeather.shared?.timeSeries![dayIndex!]
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-    
-        data = CurrentLocationWeather.shared
         
-    }
-    
     override func viewWillAppear(_ animated: Bool) {
         
         data = CurrentLocationWeather.shared
         
         view.backgroundColor = .white
-        
-        setupSwipeGestures()
         
         setupDayLabel()
         
@@ -109,7 +97,8 @@ extension HomeViewController {
         
         /**
          Droplets found here:
-         Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon"> www.flaticon.com</a>
+         https://www.flaticon.com/authors/freepik
+         https://www.flaticon.com/
          */
         
         let maxX = UIScreen.main.bounds.maxX
@@ -121,21 +110,18 @@ extension HomeViewController {
         
         print("Amount of rain: \(percipitaionAmount)")
         
-        // Here we could f.ex say 1...percipitationAmout * 100,
-        // And the droplets would be raltive to the amount of rain :)
         let relativeRain = Int(percipitaionAmount * 25)
         for n in 1...relativeRain {
             
             let randomRectSize = CGFloat.random(in: 5...25)
-            
             let duration = randomRectSize / 15
-            
             let rainDrop = UIImageView(frame: CGRect(x: CGFloat.random(in: minX...maxX),
                                                      y: 0,
                                                      width: randomRectSize,
                                                      height: randomRectSize))
-            rainDrop.image = UIImage(named: "rainDrop")
             
+            rainDrop.image = UIImage(named: "rainDrop")
+        
             UIView.animate(withDuration: TimeInterval(duration),
                            delay: Double(n) * 0.01,
                            options: [.repeat, .preferredFramesPerSecond60, .curveEaseIn],
@@ -154,42 +140,6 @@ extension HomeViewController {
         DispatchQueue.main.async {
             self.view.setNeedsLayout()
         }
-    }
-    
-    // https://stackoverflow.com/questions/39764088/swipe-gesture-in-swift-3
-    @objc func handleGesture(gesture: UISwipeGestureRecognizer) -> Void {
-        if gesture.direction == .right {
-            print("Swipe Right")
-        }
-        else if gesture.direction == .left {
-            print("Swipe Left")
-        }
-        else if gesture.direction == .up {
-            print("Swipe Up")
-        }
-        else if gesture.direction == .down {
-            print("Swipe Down")
-        }
-    }
-    
-    func setupSwipeGestures(){
-        
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeLeft.direction = .left
-        self.view.addGestureRecognizer(swipeLeft)
-        
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeRight.direction = .right
-        self.view.addGestureRecognizer(swipeRight)
-        
-        let swipeUp = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeUp.direction = .up
-        self.view.addGestureRecognizer(swipeUp)
-        
-        let swipeDown = UISwipeGestureRecognizer(target: self, action: #selector(handleGesture))
-        swipeDown.direction = .down
-        self.view.addGestureRecognizer(swipeDown)
-        
     }
     
     func displaySunAnimation() {
@@ -215,9 +165,7 @@ extension HomeViewController {
         // Continue here..
         guard let dayIndex = dayWithStartingIndex.values.first else { return }
         
-        if let timeserie = CurrentLocationWeather.shared?.getTimeSerieAt(index: dayIndex) {
-            
-            print("Timeserie data: \(timeserie.data.next_12_hours?.summary?.symbol_code)")
+        if let timeserie = data?.getTimeSerieAt(index: dayIndex){
             
             if let symbolCode = timeserie.data.next_12_hours?.summary?.symbol_code {
              

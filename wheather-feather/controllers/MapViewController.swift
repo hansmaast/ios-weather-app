@@ -134,7 +134,6 @@ extension MapViewController: UIGestureRecognizerDelegate {
             print("👆Fetched data for pin location!")
             
             // Updates UI when fetching is finished...
-            
             DispatchQueue.global(qos: .userInteractive).async {
                 SpecificLocationWeather.shared?.updateWeatherData()
                 
