@@ -8,7 +8,7 @@
 
 - When new data is fetch, the singleton gets reinitialized.
 
-- This is not "thread safe" (i think). 
+- This is not "thread safe" (I have not really grasped this concept yet). 
 
 #### Navigation:
 
@@ -22,7 +22,9 @@
             
        - ForecastViewController, which consists of a table view displaying the weather for the nexxt twele hours.
        
-       - MapForecastViewController, which consits of a MapView, and a MapForecastView displaying info for the selected location on the map.     
+       - MapForecastViewController, which consits of a MapView, and a MapForecastView displaying info for the selected location on the map.    
+           
+Here's an illustration of the navigation flow:     
 
 ![inline](./img/navigation-flow.png)
 *Illustration of the navigation flow. Made with [Excalidraw](https://excalidraw.com/).*
