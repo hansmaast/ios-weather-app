@@ -5,7 +5,9 @@
     - Build version 12A7403
 - Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
     - Target: x86_64-apple-darwin19.5.0
-- iPhone 11 in simulator.
+- Deployment Target: iOS 14.0
+
+- iPhone 11 in simulator
 
 ---
 
