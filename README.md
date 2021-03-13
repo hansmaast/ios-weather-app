@@ -1,4 +1,4 @@
-# iOs-exam
+# iOs-weather-app
 
 #### Built with: 
 - Xcode 12.1 
